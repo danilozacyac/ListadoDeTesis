@@ -1,0 +1,208 @@
+﻿<telerik:RadWindow x:Class="ListadoDeTesis.AddTesis"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   Width="763"
+                   Height="650"
+                   Header="Agregar Tesis"
+                   Loaded="RadWindow_Loaded"
+                   ResizeMode="NoResize"
+                   WindowStartupLocation="CenterScreen">
+    <telerik:RadWindow.Resources>
+        <Style x:Key="buttonstripe1" TargetType="{x:Type RadioButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <BulletDecorator Cursor="Hand">
+                            <!--  Text element  -->
+                            <Border Width="120"
+                                    Height="20"
+                                    BorderBrush="#FFE2E2E2"
+                                    BorderThickness="1"
+                                    CornerRadius="3">
+                                <Grid>
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <!--  We don't need any bullet, cause our border is the switching element  -->
+                                    <Border Name="RadioMark"
+                                            Width="10"
+                                            Margin="5,0,48,0"
+                                            HorizontalAlignment="Left"
+                                            Background="#FFCDCDCD"
+                                            CornerRadius="1" />
+                                    <!--  To change the apearance to button stripe 2, edit the margins!  -->
+                                </Grid>
+
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Offset="0" Color="White" />
+                                        <GradientStop Offset="1" Color="#FFE2E2E2" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                        </BulletDecorator>
+
+                        <!--  If item is checked, trigger the visibility of the mark  -->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="RadioMark" Property="Background" Value="Gold" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </telerik:RadWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <telerik:Label Margin="43,40,0,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Content="Núm. de Tesis:" />
+        <TextBox x:Name="TxtNumTesis"
+                 Width="146"
+                 Height="23"
+                 Margin="145,39,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 TextWrapping="Wrap" />
+        <telerik:RadRadioButton x:Name="RadCorte"
+                                Width="83"
+                                Margin="420,40,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Checked="Radio_Checked"
+                                Content="SCJN " />
+        <telerik:RadRadioButton x:Name="RadPlenos"
+                                Width="83"
+                                Margin="518,40,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Checked="Radio_Checked"
+                                Content="Plenos" />
+        <telerik:RadRadioButton x:Name="RadTribunal"
+                                Width="83"
+                                Margin="617,40,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Checked="Radio_Checked"
+                                Content="TCC" />
+        <telerik:RadComboBox x:Name="CbxSubInstancia"
+                             Width="280"
+                             Margin="420,88,0,0"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             DisplayMemberPath="Organismo"
+                             IsEnabled="False"
+                             ItemsSource="{Binding}"
+                             SelectedValuePath="IdOrganismo"
+                             SelectionChanged="CbxSubInstancia_SelectionChanged" />
+        <TextBox x:Name="TxtRubro"
+                 Width="657"
+                 Margin="43,192,0,15"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Stretch"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap" />
+        <Label Margin="43,126,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Color:" />
+        <telerik:RadComboBox x:Name="CbxColor"
+                             Width="146"
+                             Margin="145,130,0,0"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             DisplayMemberPath="Color"
+                             ItemsSource="{Binding}"
+                             SelectedValuePath="IdColor" />
+
+        <RadioButton x:Name="RadAislada"
+                     Margin="43,94,0,0"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Content=" T. Aislada"
+                     GroupName="Tipo"
+                     Style="{StaticResource buttonstripe1}" />
+        <RadioButton x:Name="RadJuris"
+                     Margin="171,94,0,0"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Content=" Jurisprudencia"
+                     GroupName="Tipo"
+                     IsChecked="True"
+                     Style="{StaticResource buttonstripe1}" />
+        <Label Margin="420,130,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Fecha de envio:" />
+        <telerik:RadDatePicker x:Name="DpFechaEnvio"
+                               Width="182"
+                               Margin="518,132,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+        <Label Margin="43,166,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Rubro:"
+               FontSize="14"
+               FontWeight="Bold" />
+
+
+        <!--  Grid 1  -->
+        <Grid x:Name="MateriasAsignadas"
+              Grid.Row="1"
+              Height="200"
+              Visibility="Visible">
+            <Label Width="250"
+                   Height="30"
+                   Margin="43,15,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="Materia sugerida por la sala"
+                   FontSize="14"
+                   FontWeight="Bold" />
+            <TextBox x:Name="TxtMaterias"
+                     Margin="43,45,43,45"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Stretch"
+                     AcceptsReturn="True" />
+            <Label Margin="43,164,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="Oficio:" />
+            <TextBox x:Name="TxtOficio"
+                     Width="175"
+                     Height="23"
+                     Margin="92,164,0,0"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     TextWrapping="Wrap" />
+        </Grid>
+        <!--  Grid 2  -->
+
+        <telerik:RadButton x:Name="BtnGuardar"
+                           Grid.Row="2"
+                           Width="83"
+                           Height="33"
+                           Margin="0,0,43,10"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Bottom"
+                           Click="BtnGuardar_Click"
+                           Content="Guardar" />
+        <telerik:RadButton x:Name="BtnCancelar"
+                           Grid.Row="2"
+                           Width="83"
+                           Height="33"
+                           Margin="0,0,131,10"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Bottom"
+                           Click="BtnCancelar_Click"
+                           Content="Cancelar"
+                           IsCancel="True" />
+
+    </Grid>
+</telerik:RadWindow>
