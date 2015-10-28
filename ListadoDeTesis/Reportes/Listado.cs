@@ -48,20 +48,22 @@ namespace ListadoDeTesis.Reportes
                 oPara1.Range.Font.Bold = 1;
                 oPara1.Range.Font.Size = 10;
                 oPara1.Range.Font.Name = "Arial";
-                oPara1.Format.SpaceAfter = 24;    //24 pt spacing after paragraph.
+                oPara1.Format.SpaceAfter = 0;    //24 pt spacing after paragraph.
                 oPara1.Range.InsertParagraphAfter();
-                oPara1.Range.Text = "COORDINACIÓN DE COMPILACIÓN Y SISTEMATIZACIÓN";
                 oPara1.Range.InsertParagraphAfter();
-                oPara1.Range.Text = "DE TESIS";
+                oPara1.Range.Text = "COORDINACIÓN DE COMPILACIÓN Y ";
+                oPara1.Range.InsertParagraphAfter();
+                oPara1.Range.Text = "SISTEMATIZACIÓN DE TESIS";
+                oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.Text = "RELACIÓN DE TESIS PARA PUBLICAR EN EL SEMANARIO JUDICIAL DE LA FEDERACIÓN Y SU GACETA";
+                oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.Text = "(AL " + DateTimeUtilities.ToLongDateFormat(fechaEnvio).ToUpper() + ")";
                 oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.Text = "TOTAL:   " + tesisImprimir.Count() + " TESIS";
                 oPara1.Range.InsertParagraphAfter();
-                oPara1.Range.ParagraphFormat.LineSpacingRule = WdLineSpacing.wdLineSpaceSingle;
-                oPara1.Range.ParagraphFormat.SpaceAfter = 0.0F;
+                oPara1.Range.InsertParagraphAfter();
 
 
                 //Tesis de jurisprudencia del Pleno

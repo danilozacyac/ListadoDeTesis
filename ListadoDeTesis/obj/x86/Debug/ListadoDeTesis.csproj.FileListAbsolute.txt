@@ -50,3 +50,7 @@ C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTe
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\CatalogoSga.dll
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\itextsharp.dll
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\CatalogoSga.pdb
+C:\Users\lavega\documents\visual studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\ListadoDeTesis.exe.manifest
+C:\Users\lavega\documents\visual studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\ListadoDeTesis.application
+C:\Users\lavega\documents\visual studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\obj\x86\Debug\ListadoDeTesis.exe.manifest
+C:\Users\lavega\documents\visual studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\obj\x86\Debug\ListadoDeTesis.application
