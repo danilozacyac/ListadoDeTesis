@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using CatalogoSga;
 using ListadoDeTesis.Dto;
 using ListadoDeTesis.Models;
 using ListadoDeTesis.Singletons;
@@ -124,9 +125,19 @@ namespace ListadoDeTesis
             else
             {
                 MateriasAsignadas.Visibility = Visibility.Visible;
+                TxtOficio.Text = "2a-SAST-";
 
             }
           
+        }
+
+        private void BtnMateriasSga_Click(object sender, RoutedEventArgs e)
+        {
+            List<int> permisos = new List<int>() { 1, 2, 4, 8, 16 };
+            RelacionaMateriaSga relation = new RelacionaMateriaSga( "Listado");
+            relation.Tag = permisos;
+            relation.ShowDialog();
+            TxtMaterias.Text = RelacionaMateriaSga.textoDeLasMaterias;
         }
     }
 }

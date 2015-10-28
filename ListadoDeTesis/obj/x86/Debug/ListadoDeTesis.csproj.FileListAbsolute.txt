@@ -45,3 +45,8 @@ C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTe
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\obj\x86\Debug\FechaDeEnvioCorrecta.baml
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\obj\x86\Debug\FechaDeEnvioCorrecta.g.cs
+C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\obj\x86\Debug\SelectPeriodoTesis.baml
+C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\obj\x86\Debug\SelectPeriodoTesis.g.cs
+C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\CatalogoSga.dll
+C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\itextsharp.dll
+C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\CatalogoSga.pdb

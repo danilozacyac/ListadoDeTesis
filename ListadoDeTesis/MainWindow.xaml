@@ -9,7 +9,7 @@
         Background="Transparent"
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None">
+        WindowStyle="None" Icon="Resources/listLawyer.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

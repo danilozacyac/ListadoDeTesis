@@ -22,7 +22,7 @@
         <telerik:RadRibbonView VerticalAlignment="Top">
             <telerik:RadRibbonTab Header="Opciones">
                 <telerik:RadRibbonGroup>
-                    <telerik:RadRibbonButton Click="RadRibbonButton_Click"
+                    <telerik:RadRibbonButton x:Name="BtnAddTesis" Click="RadRibbonButton_Click"
                                              LargeImage="Resources/1425495838_add-notes.png"
                                              Size="Large">
                         <StackPanel Orientation="Vertical">

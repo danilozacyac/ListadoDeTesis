@@ -24,6 +24,12 @@ namespace ListadoDeTesis.Converters
                 return new SolidColorBrush(Colors.Red);
             }
             else if (tipo == 3)
+                return new SolidColorBrush(Colors.Blue);
+            else if (tipo == 4)
+                return new SolidColorBrush(Colors.Purple);
+            else if (tipo == 5)
+                return new SolidColorBrush(Colors.Brown);
+            else if (tipo == 6)
                 return new SolidColorBrush(Colors.Green);
             else
                 return new SolidColorBrush(Colors.Black);

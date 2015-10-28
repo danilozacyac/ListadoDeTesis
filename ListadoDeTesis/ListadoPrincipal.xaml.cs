@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ListadoDeTesis.Dto;
 using ListadoDeTesis.Models;
-using ListadoDeTesis.Reportes;
 using MantesisVerIusCommonObjects.Dto;
 using Telerik.Windows.Controls;
 
@@ -24,17 +16,42 @@ namespace ListadoDeTesis
     /// </summary>
     public partial class ListadoPrincipal
     {
+        /*
+         * Privilegios por Grupo
+         * 
+         * 1. Captura de tesis
+         * 2. Validar Fechas 
+         * 3. Validar Fechas, Capturar Tesis y Generar Reportes
+         * 4. 
+         * 5.Generar reporte y ver estadísticas
+         * 10. Todo
+         * */
+
+
         private ObservableCollection<Tesis> listaTesis;
 
         public ListadoPrincipal(ObservableCollection<Tesis> listaTesis)
         {
             InitializeComponent();
             this.listaTesis = listaTesis;
+            this.ShowInTaskbar(this, "Listado de Tesis");
         }
 
         private void RadWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            this.SetPermisos();
             GTesis.DataContext = listaTesis;
+
+        }
+
+        public void ShowInTaskbar(RadWindow control, string title)
+        {
+            control.Show();
+            var window = control.ParentOfType<Window>();
+            window.ShowInTaskbar = true;
+            window.Title = title;
+            var uri = new Uri("pack://application:,,,/ListadoDeTesis;component/Resources/listLawyer.ico");
+            window.Icon = BitmapFrame.Create(uri);
         }
 
         private void RadRibbonButton_Click(object sender, RoutedEventArgs e)
@@ -45,7 +62,7 @@ namespace ListadoDeTesis
 
         private void GTesis_DataLoaded(object sender, EventArgs e)
         {
-            GTesis.Columns[4].IsVisible = (AccesoUsuarioModel.Grupo == 3 || AccesoUsuarioModel.Grupo == 10) ? true : false;
+            GTesis.Columns[4].IsVisible = (AccesoUsuarioModel.Grupo == 2 || AccesoUsuarioModel.Grupo == 3 || AccesoUsuarioModel.Grupo == 10) ? true : false;
         }
 
         private void BtnValidaFecha_Click(object sender, RoutedEventArgs e)
@@ -76,8 +93,51 @@ namespace ListadoDeTesis
 
         private void BtnPrint_Click(object sender, RoutedEventArgs e)
         {
-            Listado listado = new Listado(listaTesis);
-            listado.GeneraListado();
+            var tesisPorValidar = (from n in listaTesis
+                                   where n.IdUsuarioValida == 0
+                                   select n);
+
+            if (tesisPorValidar.Count() > 0)
+            {
+                MessageBox.Show("Las tesis cuya fecha de envio no ha sido validada no se incluirán en el listado",
+                    "ATENCIÓN", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            SelectPeriodoTesis imprime = new SelectPeriodoTesis();
+            imprime.ShowDialog();
+            
+        }
+
+        /*
+        * Privilegios por Grupo
+        * 
+        * 1. Captura de tesis
+        * 2. Validar Fechas 
+        * 3. Validar Fechas, Capturar Tesis y Generar Reportes
+        * 4. 
+        * 5.Generar reporte y ver estadísticas
+        * 10. Todo
+        * */
+        private void SetPermisos()
+        {
+            if (AccesoUsuarioModel.Grupo == 1)
+            {
+                BtnPrint.IsEnabled = false;
+            }
+            else if (AccesoUsuarioModel.Grupo == 2)
+            {
+                BtnAddTesis.IsEnabled = false;
+                BtnPrint.IsEnabled = false;
+            }
+            else if (AccesoUsuarioModel.Grupo == 3)
+            {
+                //Hasta ahorita tiene permiso de todo
+            }
+            else if (AccesoUsuarioModel.Grupo == 5)
+            {
+                BtnAddTesis.IsEnabled = false;
+                BtnPrint.IsEnabled = false;
+            }
         }
     }
 }

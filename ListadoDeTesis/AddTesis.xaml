@@ -118,7 +118,13 @@
                              VerticalAlignment="Top"
                              DisplayMemberPath="Color"
                              ItemsSource="{Binding}"
-                             SelectedValuePath="IdColor" />
+                             SelectedValuePath="IdColor">
+            <telerik:RadComboBox.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Control.ToolTip" Value="{Binding Descripcion}" />
+                </Style>
+            </telerik:RadComboBox.ItemContainerStyle>
+        </telerik:RadComboBox>
 
         <RadioButton x:Name="RadAislada"
                      Margin="43,94,0,0"
@@ -156,7 +162,7 @@
         <Grid x:Name="MateriasAsignadas"
               Grid.Row="1"
               Height="200"
-              Visibility="Visible">
+              Visibility="Collapsed">
             <Label Width="250"
                    Height="30"
                    Margin="43,15,0,0"
@@ -181,6 +187,12 @@
                      HorizontalAlignment="Left"
                      VerticalAlignment="Top"
                      TextWrapping="Wrap" />
+            <telerik:RadButton x:Name="BtnMateriasSga"
+                               Width="145"
+                               Margin="555,166,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Content="Ver Materias" Click="BtnMateriasSga_Click" />
         </Grid>
         <!--  Grid 2  -->
 

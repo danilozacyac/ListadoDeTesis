@@ -13,6 +13,8 @@ namespace ListadoDeTesis.Dto
 
         private int idColor;
         private string color;
+        private string descripcion;
+
         public int IdColor
         {
             get
@@ -37,6 +39,19 @@ namespace ListadoDeTesis.Dto
             }
         }
 
+        public string Descripcion
+        {
+            get
+            {
+                return this.descripcion;
+            }
+            set
+            {
+                this.descripcion = value;
+            }
+        }
+
+        
 
         public ObservableCollection<Colores> GetColores()
         {
@@ -46,7 +61,7 @@ namespace ListadoDeTesis.Dto
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT * FROM Colores";
+            String sqlCadena = "SELECT * FROM Colores ORDER BY IdColor";
 
             try
             {
@@ -62,7 +77,7 @@ namespace ListadoDeTesis.Dto
                         Colores color = new Colores();
                         color.idColor = Convert.ToInt32(reader["IdColor"]);
                         color.Color = reader["Color"].ToString();
-
+                        color.descripcion = reader["Descripcion"].ToString();
 
                         listaColores.Add(color);
                     }
