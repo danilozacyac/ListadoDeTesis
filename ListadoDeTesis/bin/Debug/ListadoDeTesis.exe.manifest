@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="ListadoDeTesis.exe" version="1.0.0.5" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
+  <asmv1:assemblyIdentity name="ListadoDeTesis.exe" version="1.0.0.11" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
   <description asmv2:iconFile="listLawyer.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -67,14 +67,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ListadoDeTesis.exe" size="1044480">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ListadoDeTesis.exe" size="1078784">
       <assemblyIdentity name="ListadoDeTesis" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MNS9oUM4Gv+A4Cm3vuhnZ5LyzrtC78c102zuKFV8PMs=</dsig:DigestValue>
+        <dsig:DigestValue>ceMcoFCJlB/TCo/AovgrFl7Dj+Q2/s5FM2147O5uh/Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -111,6 +111,18 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
         <dsig:DigestValue>hi5rZa3C/A9wn+ktiGt/yExNbKlMJYp3y5qaVwR301k=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="telerik.windows.controls.chart.dll" size="1427456">
+      <assemblyIdentity name="Telerik.Windows.Controls.Chart" version="2014.2.729.45" publicKeyToken="5803CFA389C90CE7" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>l3mB/qvrU2TlLpsTAk3sPWGvIB7+ZaGTHRDRz4Ro3eA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -288,7 +300,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>EJGY4Q6NugzRUrT05rjryR4n24SCTi+XdkU4ijdy/P4=</dsig:DigestValue>
+      <dsig:DigestValue>6qSqKPqpo5QY/7LZ5B3LuVrOziMvXhQvsC/wkCBInko=</dsig:DigestValue>
     </hash>
   </file>
   <file name="listLawyer.ico" size="161236">

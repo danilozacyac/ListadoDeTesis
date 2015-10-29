@@ -289,7 +289,7 @@ namespace ListadoDeTesis.Reportes
                     oTable.Cell(fila, 3).Range.Text = print.Rubro;
                     oTable.Cell(fila, 3).Range.Font.ColorIndex = cellColor;
                     oTable.Cell(fila, 3).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
-                    oTable.Cell(fila, 4).Range.Text = print.Rubro;
+                    oTable.Cell(fila, 4).Range.Text = print.MateriaAsignada;
                     oTable.Cell(fila, 4).Range.Font.Size = 8;
                     oTable.Cell(fila, 4).Range.Font.ColorIndex = cellColor;
 
@@ -302,7 +302,7 @@ namespace ListadoDeTesis.Reportes
               
 
                 oTable.Cell(fila, 1).Range.Text = "Consecutivo";
-                oTable.Cell(fila, 2).Range.Text = "Organismo";
+                oTable.Cell(fila, 2).Range.Text = "Organo";
                 oTable.Cell(fila, 3).Range.Text = "Núm. de identificación de la tesis";
                 oTable.Cell(fila, 4).Range.Text = "Título y subtítulo";
 

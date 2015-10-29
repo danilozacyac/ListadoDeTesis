@@ -30,6 +30,25 @@
                             <TextBlock HorizontalAlignment="Center" Text="Tesis" />
                         </StackPanel>
                     </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="BtnMisTesis" 
+                                             LargeImage="Resources/1425495849_user.png"
+                                             Size="Large" Click="BtnMisTesis_Click">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="Ver" />
+                            <TextBlock HorizontalAlignment="Center" Text="mis tesis" />
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="BtnTodasTesis" 
+                                             LargeImage="Resources/1425495848_group.png"
+                                             Size="Large" Click="BtnTodasTesis_Click">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="Ver" />
+                            <TextBlock HorizontalAlignment="Center" Text="todas" />
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                </telerik:RadRibbonGroup>
+                <telerik:RadRibbonGroup Header="Herramientas administrativas">
+                    <telerik:RadRibbonButton IsEnabled="False" Content="Ver Envios" x:Name="BtnVerEnvios" Size="Large" LargeImage="Resources/1425495918_schedule.png" Click="VerEnvios_Click"/>
                     <telerik:RadRibbonButton x:Name="BtnPrint"
                                              Click="BtnPrint_Click"
                                              LargeImage="Resources/printer_blue.png"
@@ -39,11 +58,6 @@
                             <TextBlock HorizontalAlignment="Center" Text="Listado" />
                         </StackPanel>
                     </telerik:RadRibbonButton>
-
-                </telerik:RadRibbonGroup>
-                <telerik:RadRibbonGroup Header="">
-                    <telerik:RadRibbonButton IsEnabled="False" Content="Ver Envios" x:Name="VerEnvios" Size="Large" LargeImage="Resources/1425495918_schedule.png" Click="VerEnvios_Click"/>
-
                 </telerik:RadRibbonGroup>
             </telerik:RadRibbonTab>
         </telerik:RadRibbonView>

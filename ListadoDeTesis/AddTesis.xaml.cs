@@ -140,6 +140,7 @@ namespace ListadoDeTesis
             relation.Tag = permisos;
             relation.ShowDialog();
             TxtMaterias.Text = RelacionaMateriaSga.textoDeLasMaterias;
+            RelacionaMateriaSga.textoDeLasMaterias = String.Empty;
         }
     }
 }

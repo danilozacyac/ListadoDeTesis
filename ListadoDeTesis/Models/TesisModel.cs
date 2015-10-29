@@ -167,6 +167,79 @@ namespace ListadoDeTesis.Models
         }
 
         /// <summary>
+        /// Obtiene todas las tesis capturadas que se enviaron en un día particular
+        /// </summary>
+        /// <param name="fechaEnvia"></param>
+        /// <returns></returns>
+        public ObservableCollection<Tesis> GetTesis(DateTime? fechaEnvia)
+        {
+
+
+            ObservableCollection<Tesis> listaTesis = new ObservableCollection<Tesis>();
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+            String sqlCadena = "SELECT T.*,B.* FROM Tesis T INNER JOIN Bitacora B ON T.IdTesis = B.IdTesis " +
+                "WHERE FechaReal = @FechaReal ORDER BY B.FechaAltaInt desc, T.RubroStr asc";
+
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                cmd.Parameters.AddWithValue("@FechaReal", fechaEnvia);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Tesis tesis = new Tesis();
+                        tesis.IdTesis = Convert.ToInt32(reader["T.IdTesis"]);
+                        tesis.ClaveTesis = reader["Tesis"].ToString();
+                        tesis.Rubro = reader["Rubro"].ToString();
+                        tesis.Tatj = Convert.ToInt32(reader["tatj"]);
+                        tesis.IdInstancia = Convert.ToInt32(reader["IdInstancia"]);
+                        tesis.IdSubInstancia = Convert.ToInt32(reader["IdSubInstancia"]);
+                        tesis.OrdenInstancia = Convert.ToInt32(reader["OrdenInstancia"]);
+                        tesis.IdColor = Convert.ToInt32(reader["IdColor"]);
+                        tesis.MateriaAsignada = reader["MateriaAsignada"].ToString();
+                        tesis.Oficio = reader["Oficio"].ToString();
+                        tesis.IdUsuario = Convert.ToInt32(reader["IdUsuario"]);
+                        tesis.MateriaAsignada = reader["MateriaAsignada"].ToString();
+                        tesis.Oficio = reader["Oficio"].ToString();
+                        tesis.FechaAltaSistema = DateTimeUtilities.GetDateFromReader(reader, "FechaAlta");
+                        tesis.FechaEnvio = DateTimeUtilities.GetDateFromReader(reader, "FechaEnvio");
+                        tesis.FechaReal = DateTimeUtilities.GetDateFromReader(reader, "FechaReal");
+                        tesis.IdUsuarioValida = Convert.ToInt32(reader["IdUsuarioValida"]);
+
+                        listaTesis.Add(tesis);
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return listaTesis;
+        }
+
+        /// <summary>
         /// Obtiene las tesis de un periodo específico para generar el listado que se enviará
         /// </summary>
         /// <param name="fInicio">Fecha en que se envió el último listado</param>

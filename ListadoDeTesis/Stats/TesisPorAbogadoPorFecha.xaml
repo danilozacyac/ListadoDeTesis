@@ -1,25 +1,107 @@
 ﻿<telerik:RadWindow x:Class="ListadoDeTesis.Stats.TesisPorAbogadoPorFecha"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:converter="clr-namespace:ListadoDeTesis.Converters"
                    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
                    Width="800"
                    Height="600"
                    Header="TesisPorAbogadoPorFecha"
                    Loaded="RadWindow_Loaded"
                    WindowStartupLocation="CenterScreen">
+    <telerik:RadWindow.Resources>
+        <converter:RowColorConverter x:Key="rowColor" />
+        <converter:FontColorConverter x:Key="fontColor" />
+    </telerik:RadWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <telerik:RadDatePicker x:Name="DpFechaDeEnvio"
-                               Margin="163,10,0,0"
+                               Width="173"
+                               Margin="215,18,0,0"
                                HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
-        <telerik:RadChart x:Name="TesisLawyer"
-                          Grid.Row="1"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          Content="" />
+                               VerticalAlignment="Top"
+                               SelectionChanged="DpFechaDeEnvio_SelectionChanged" />
+        <telerik:RadCartesianChart Grid.Row="1"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   Palette="Arctic">
+            <telerik:RadCartesianChart.HorizontalAxis>
+                <telerik:CategoricalAxis />
+            </telerik:RadCartesianChart.HorizontalAxis>
+            <telerik:RadCartesianChart.VerticalAxis>
+                <telerik:LinearAxis />
+            </telerik:RadCartesianChart.VerticalAxis>
+            <telerik:BarSeries x:Name="TesisLawyer"
+                               CategoryBinding="Usuario"
+                               FontFamily="Segoe UI"
+                               FontSize="10"
+                               ItemsSource="{Binding }"
+                               ValueBinding="TotalTesis">
+                <telerik:BarSeries.LegendSettings>
+                    <telerik:SeriesLegendSettings Title="Total de tesis por abogado" />
+                </telerik:BarSeries.LegendSettings>
+            </telerik:BarSeries>
+        </telerik:RadCartesianChart>
+        <Label Margin="10,14,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Fecha de envío de las tesis:"
+               FontSize="14"
+               FontWeight="Bold" />
+        <Label Grid.Row="2"
+               Margin="24,7,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Filtrar por abogado:"
+               FontSize="14"
+               FontWeight="Bold" />
+        <telerik:RadComboBox x:Name="CbxAbogados"
+                             Grid.Row="2"
+                             Width="250"
+                             Margin="215,10,0,0"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             DisplayMemberPath="Nombre"
+                             ItemsSource="{Binding}"
+                             SelectedValuePath="IdUsuario"
+                             SelectionChanged="CbxAbogados_SelectionChanged" />
+        <telerik:RadGridView Name="GTesis"
+                             Grid.Row="3"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Stretch"
+                             AutoGenerateColumns="False"
+                             CanUserDeleteRows="False"
+                             CanUserInsertRows="False"
+                             ItemsSource="{Binding}"
+                             ShowGroupPanel="False">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Width="100"
+                                            DataMemberBinding="{Binding ClaveTesis}"
+                                            Header="Núm. tesis"
+                                            IsFilterable="False"
+                                            IsReadOnly="True" />
+                <telerik:GridViewDataColumn Width="*"
+                                            DataMemberBinding="{Binding Rubro}"
+                                            Header="Rubro"
+                                            IsReadOnly="True" />
+                <telerik:GridViewDataColumn Width="Auto"
+                                            DataFormatString="{} {0:dd/MM/yyyy}"
+                                            DataMemberBinding="{Binding FechaAltaSistema}"
+                                            Header="Fecha de Alta"
+                                            IsFilterable="False"
+                                            IsReadOnly="True" />
+
+            </telerik:RadGridView.Columns>
+            <telerik:RadGridView.RowStyle>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="Background" Value="{Binding Tatj, Converter={StaticResource rowColor}}" />
+                    <Setter Property="Foreground" Value="{Binding IdColor, Converter={StaticResource fontColor}}" />
+                </Style>
+            </telerik:RadGridView.RowStyle>
+        </telerik:RadGridView>
     </Grid>
 </telerik:RadWindow>

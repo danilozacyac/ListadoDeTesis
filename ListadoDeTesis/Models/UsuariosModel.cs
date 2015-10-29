@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Linq;
+using ListadoDeTesis.Dto;
 using MantesisVerIusCommonObjects.Dto;
 using ScjnUtilities;
 
@@ -61,6 +63,68 @@ namespace ListadoDeTesis.Models
             }
 
             return bExisteUsuario;
+        }
+
+        /// <summary>
+        /// Obtiene los usuarios activos 
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<Usuarios> GetUsuarios()
+        {
+            ObservableCollection<Usuarios> listausuarios = new ObservableCollection<Usuarios>();
+
+            Usuarios usuario = new Usuarios();
+            usuario.IdUsuario = Convert.ToInt32(1000);
+            usuario.Nombre = "Todo";
+            usuario.Usuario = "Todo";
+
+            listausuarios.Add(usuario);
+
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+            String sqlCadena = "SELECT * FROM Usuarios WHERE Estado = 1";
+
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        usuario = new Usuarios();
+                        usuario.IdUsuario = Convert.ToInt32(reader["Llave"]);
+                        usuario.Nombre = reader["Nombre"].ToString();
+                        usuario.Usuario = reader["Usuario"].ToString();
+
+                        listausuarios.Add(usuario);
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,UsuariosModel", "ListadoDeTesis");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,UsuariosModel", "ListadoDeTesis");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return listausuarios;
         }
     }
 }

@@ -58,3 +58,5 @@ C:\Users\lavega\documents\visual studio 2012\Projects\ListadoDeTesis\ListadoDeTe
 C:\Users\lavega\documents\visual studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\obj\x86\Debug\Stats\TesisPorAbogadoPorFecha.g.cs
 C:\Users\lavega\documents\visual studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\Telerik.Windows.Controls.Charting.dll
 C:\Users\lavega\documents\visual studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\Telerik.Windows.Controls.Charting.xml
+C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\telerik.windows.controls.chart.dll
+C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\telerik.windows.controls.chart.xml

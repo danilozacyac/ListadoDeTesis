@@ -139,12 +139,28 @@ namespace ListadoDeTesis
                 BtnAddTesis.IsEnabled = false;
                 BtnPrint.IsEnabled = false;
             }
+            else if (AccesoUsuarioModel.Grupo == 10)
+            {
+                BtnVerEnvios.IsEnabled = true;
+            }
         }
 
         private void VerEnvios_Click(object sender, RoutedEventArgs e)
         {
             TesisPorAbogadoPorFecha stat = new TesisPorAbogadoPorFecha();
             stat.ShowDialog();
+        }
+
+        private void BtnMisTesis_Click(object sender, RoutedEventArgs e)
+        {
+            GTesis.DataContext = (from n in listaTesis
+                                  where n.IdUsuario == AccesoUsuarioModel.Llave
+                                  select n);
+        }
+
+        private void BtnTodasTesis_Click(object sender, RoutedEventArgs e)
+        {
+            GTesis.DataContext = listaTesis;
         }
     }
 }

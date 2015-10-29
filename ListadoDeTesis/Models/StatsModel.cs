@@ -6,6 +6,7 @@ using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ListadoDeTesis.Dto;
 using ScjnUtilities;
 
 namespace ListadoDeTesis.Models
@@ -39,8 +40,10 @@ namespace ListadoDeTesis.Models
                 {
                     while (reader.Read())
                     {
-                        listaFechasEnvio.Add(Convert.ToDateTime(DateTimeUtilities.GetDateFromReader(reader, "FechaReal")));
-                        
+                        if (!String.IsNullOrEmpty(reader["FechaReal"].ToString()))
+                        {
+                            listaFechasEnvio.Add(Convert.ToDateTime(DateTimeUtilities.GetDateFromReader(reader, "FechaReal")));
+                        }
                     }
                 }
                 cmd.Dispose();
@@ -86,6 +89,60 @@ namespace ListadoDeTesis.Models
 
 
             return blackOutDates;
+        }
+
+
+
+        public List<Estadistica> GetTesis(DateTime? fechaEnvio)
+        {
+            List<Estadistica> listaTesis = new List<Estadistica>();
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+            String sqlCadena = "SELECT Usuario, COUNT(Tesis.FechaReal) AS Total " +
+                                "FROM (Bitacora INNER JOIN Tesis ON Bitacora.IdTesis = Tesis.IdTesis) " + 
+                                " INNER JOIN Usuarios ON Bitacora.IdUsuario = Usuarios.Llave " +
+                                " WHERE FechaReal = @FechaReal  GROUP BY Usuario";
+
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                cmd.Parameters.AddWithValue("@FechaReal", fechaEnvio);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Estadistica stat = new Estadistica();
+                        stat.Usuario = reader["Usuario"].ToString();
+                        stat.TotalTesis = Convert.ToInt32(reader["Total"]);
+                        listaTesis.Add(stat);
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return listaTesis;
         }
 
     }

@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using ListadoDeTesis.Dto;
 using ListadoDeTesis.Models;
-using Telerik.Windows.Controls;
 
 namespace ListadoDeTesis.Stats
 {
@@ -21,6 +13,8 @@ namespace ListadoDeTesis.Stats
     /// </summary>
     public partial class TesisPorAbogadoPorFecha
     {
+        private ObservableCollection<Tesis> listaTesis;
+
         public TesisPorAbogadoPorFecha()
         {
             InitializeComponent();
@@ -34,19 +28,33 @@ namespace ListadoDeTesis.Stats
             DpFechaDeEnvio.SelectableDateStart = blakOutDate[0];
             DpFechaDeEnvio.SelectableDateEnd = blakOutDate[blakOutDate.Count - 1];
 
+            CbxAbogados.DataContext = new UsuariosModel().GetUsuarios();
 
+        }
 
-            List<KeyValuePair<string, int>> data = new List<KeyValuePair<string, int>>();
-            data.Add(new KeyValuePair<string, int>("Toyota", 215));
-            data.Add(new KeyValuePair<string, int>("General Motors", 192));
-            data.Add(new KeyValuePair<string, int>("Volkswagen", 151));
-            data.Add(new KeyValuePair<string, int>("Ford", 125));
-            data.Add(new KeyValuePair<string, int>("Honda", 91));
-            data.Add(new KeyValuePair<string, int>("Nissan", 79));
-            data.Add(new KeyValuePair<string, int>("PSA", 79));
-            data.Add(new KeyValuePair<string, int>("Hyundai", 64));
+        private void DpFechaDeEnvio_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TesisLawyer.DataContext = new StatsModel().GetTesis(DpFechaDeEnvio.SelectedDate);
+            CbxAbogados.SelectedIndex = 0;
+            
+        }
 
-            TesisLawyer.ItemsSource = data;
+        private void CbxAbogados_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Usuarios usuario = CbxAbogados.SelectedItem as Usuarios;
+
+            if (usuario.IdUsuario == 1000)
+            {
+                listaTesis = new TesisModel().GetTesis(DpFechaDeEnvio.SelectedDate);
+                GTesis.DataContext = listaTesis;
+            }
+            else
+            {
+                GTesis.DataContext = (from n in listaTesis
+                                      where n.IdUsuario == usuario.IdUsuario
+                                      orderby n.Rubro
+                                      select n);
+            }
         }
     }
 }

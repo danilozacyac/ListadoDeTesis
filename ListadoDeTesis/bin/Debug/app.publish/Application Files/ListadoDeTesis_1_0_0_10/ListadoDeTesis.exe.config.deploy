@@ -4,11 +4,11 @@
             <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
         </startup>
 <connectionStrings>
-    <add name="Listado" connectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\ModuloIntercomunicacionBD\ListadoTesis.accdb;Persist Security Info=False;"/>
-  <add name="Directorio" connectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\ModuloIntercomunicacionBD\Dir_Org.mdb;Persist Security Info=False;" providerName="System.Data.OleDb" />
+    <!--<add name="Listado" connectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\ModuloIntercomunicacionBD\ListadoTesis.accdb;Persist Security Info=False;"/>
+  <add name="Directorio" connectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\ModuloIntercomunicacionBD\Dir_Org.mdb;Persist Security Info=False;" providerName="System.Data.OleDb" />-->
   
-   <!--<add name="Listado" connectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\172.28.33.26\ListaTesis\ListadoTesis.accdb;Persist Security Info=False;"/>
-  <add name="Directorio" connectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\172.28.33.26\ListaTesis\Dir_Org.mdb;Persist Security Info=False;" providerName="System.Data.OleDb" />-->
+   <add name="Listado" connectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\172.28.33.26\ListaTesis\ListadoTesis.accdb;Persist Security Info=False;"/>
+  <add name="Directorio" connectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\172.28.33.26\ListaTesis\Dir_Org.mdb;Persist Security Info=False;" providerName="System.Data.OleDb" />
   
   
   

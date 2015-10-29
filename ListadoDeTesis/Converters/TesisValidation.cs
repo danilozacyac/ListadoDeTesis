@@ -12,7 +12,7 @@ namespace ListadoDeTesis.Converters
             int validaTesis = 0;
             Int32.TryParse(value.ToString(),out validaTesis);
 
-            if ((AccesoUsuarioModel.Grupo == 3 && validaTesis == 0) || (AccesoUsuarioModel.Grupo == 10 && validaTesis == 0))
+            if ((AccesoUsuarioModel.Grupo == 2 && validaTesis == 0) || (AccesoUsuarioModel.Grupo == 3 && validaTesis == 0) || (AccesoUsuarioModel.Grupo == 10 && validaTesis == 0))
             {
                 return true;
             }

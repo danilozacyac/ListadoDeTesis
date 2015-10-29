@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="ListadoDeTesis.exe" version="1.0.0.5" publicKeyToken="de37605f39a0253b" language="neutral" processorArchitecture="x86" type="win32" />
+  <asmv1:assemblyIdentity name="ListadoDeTesis.exe" version="1.0.0.10" publicKeyToken="de37605f39a0253b" language="neutral" processorArchitecture="x86" type="win32" />
   <description asmv2:iconFile="listLawyer.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -67,14 +67,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ListadoDeTesis.exe" size="1044480">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ListadoDeTesis.exe" size="1052672">
       <assemblyIdentity name="ListadoDeTesis" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MNS9oUM4Gv+A4Cm3vuhnZ5LyzrtC78c102zuKFV8PMs=</dsig:DigestValue>
+        <dsig:DigestValue>mXAIXCRmWgZbQFPR4wmP9Vtfmn/kLthWNsvKFFHuV4A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -111,6 +111,18 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
         <dsig:DigestValue>hi5rZa3C/A9wn+ktiGt/yExNbKlMJYp3y5qaVwR301k=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="telerik.windows.controls.chart.dll" size="1427456">
+      <assemblyIdentity name="Telerik.Windows.Controls.Chart" version="2014.2.729.45" publicKeyToken="5803CFA389C90CE7" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>l3mB/qvrU2TlLpsTAk3sPWGvIB7+ZaGTHRDRz4Ro3eA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -288,7 +300,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>EJGY4Q6NugzRUrT05rjryR4n24SCTi+XdkU4ijdy/P4=</dsig:DigestValue>
+      <dsig:DigestValue>6qSqKPqpo5QY/7LZ5B3LuVrOziMvXhQvsC/wkCBInko=</dsig:DigestValue>
     </hash>
   </file>
   <file name="listLawyer.ico" size="161236">
@@ -300,4 +312,4 @@
       <dsig:DigestValue>VT8i3S3bvU8ZGQaBeVBFTpKoF9N6u9EfAfdWjWO+0E8=</dsig:DigestValue>
     </hash>
   </file>
-<publisherIdentity name="CN=DOM_COORD\laVega" issuerKeyHash="c25129461d1aab36e7ec8170d469c0e2fa04704b" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>ES6dzvxgA7Wir6SoKr5bNn5KcGGP5Wzp/Lf4N6kz35I=</DigestValue></Reference></SignedInfo><SignatureValue>JQxT85QleY/FcOIJzfXi+J+fF6ij6t4GdDyHuV90D8n1smN08grWC7xvw4vF/bXE5cU4LPF5nfnHr8mRGv2qa/RJEd2bBRarut4ABpydkEum+HViGsQTLVkBhUpT276LlyUEJE+n0hgMhHxkHu1QeGxNhITQKao/Dz+BM6QLXEo=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>nHucPSop9VVh3OzjN3g+fUD1dRheeUxIHeM7rjTwFvpWh7UwW7fc6ERTa874r9LkCtXlALj7ns/5Bbvmsh6jHZLBGccN/GMqU2SKuR4lwbVTpyZZZF8lxEeeg9fdR6exokp/0WUIyo/zSvg3fQI2C8g6w5pA9RewGNiylTMdyZ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="92df33a937f8b7fce96ce58f61704a7e365bbe2aa8a4afa2b50360fcce9d2e11" Description="" Url=""><as:assemblyIdentity name="ListadoDeTesis.exe" version="1.0.0.5" publicKeyToken="de37605f39a0253b" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DOM_COORD\laVega</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>UiNyvBh6F5LY943UAJfTE6oQ12bv/TZBQoQc0QjEmzA=</DigestValue></Reference></SignedInfo><SignatureValue>PmpBYpHsQUtZTmVyVjOkUiVw53BBxcOSX6HBKmVEP7kWj+sFF5OdVQPkqqPWRRgNO+3WLYDJtyYxwRa48Vnvd9jvz/yioxy5rlzQS7WzYeC7tNYYkfbH7Q6ECFNFZbD/GDq4hWGDZK3TZCEl9GIwI/3qGekfj2vUq/JjGh21cpo=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>nHucPSop9VVh3OzjN3g+fUD1dRheeUxIHeM7rjTwFvpWh7UwW7fc6ERTa874r9LkCtXlALj7ns/5Bbvmsh6jHZLBGccN/GMqU2SKuR4lwbVTpyZZZF8lxEeeg9fdR6exokp/0WUIyo/zSvg3fQI2C8g6w5pA9RewGNiylTMdyZ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB2TCCAUKgAwIBAgIQamXusrDhAKFPkeP10ZgOLzANBgkqhkiG9w0BAQsFADArMSkwJwYDVQQDHiAARABPAE0AXwBDAE8ATwBSAEQAXABsAGEAVgBlAGcAYTAeFw0xNTEwMjgyMDU1MjhaFw0xNjEwMjgwMjU1MjhaMCsxKTAnBgNVBAMeIABEAE8ATQBfAEMATwBPAFIARABcAGwAYQBWAGUAZwBhMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCce5w9Kin1VWHc7OM3eD59QPV1GF55TEgd4zuuNPAW+laHtTBbt9zoRFNrzviv0uQK1eUAuPuez/kFu+ayHqMdksEZxw38YypTZIq5HiXBtVOnJllkXyXER56D191Hp7GiSn/RZQjKj/NK+Dd9AjYLyDrDmkD1F7AY2LKVMx3JnQIDAQABMA0GCSqGSIb3DQEBCwUAA4GBAIiqHEtc2N6IJqf5ru9z3CeusRo5LVGbkdjYR83vBF7wlCWFcn2A0qlX53kDN3ezJif2PpMEHp0+iEgVhc+PGk9Iv2nW1xblmMCeu1uK4GpOdudBCO+o1PPP0gJo029+VfjfjmoXDoNheDLUjjrYnFDZLyb6jz3bW1xl7ZazprXr</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
+<publisherIdentity name="CN=DOM_COORD\laVega" issuerKeyHash="c25129461d1aab36e7ec8170d469c0e2fa04704b" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>bbPft3H/lbtcWTnWkgW5Msf+0c/aCk3gob4QqYk1sDU=</DigestValue></Reference></SignedInfo><SignatureValue>S+M3XDGjPfHlmdT87ZZDRcKEupvjP20bhPLlTvdhZObzrNUZ1aQXFr0D7uxxxBGpJsGtgQrejxOWYvn+8vdadATGlSesqEfPyHzyzO+MMsINNUhFE/lyps23MqhB62jseALZSokcnoWas69q2ZB9hdZnwDqcBm8799coQ8C1QHM=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>nHucPSop9VVh3OzjN3g+fUD1dRheeUxIHeM7rjTwFvpWh7UwW7fc6ERTa874r9LkCtXlALj7ns/5Bbvmsh6jHZLBGccN/GMqU2SKuR4lwbVTpyZZZF8lxEeeg9fdR6exokp/0WUIyo/zSvg3fQI2C8g6w5pA9RewGNiylTMdyZ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="35b03589a910bea1e04d0adacfd1fec732b90592d639595cbb95ff71b7dfb36d" Description="" Url=""><as:assemblyIdentity name="ListadoDeTesis.exe" version="1.0.0.10" publicKeyToken="de37605f39a0253b" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DOM_COORD\laVega</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>+FfgyCbOpiHssbMsMT4W4zGmS+BrYcsu0JJmi58qeJk=</DigestValue></Reference></SignedInfo><SignatureValue>IpSp6y5Sq4AbSz/WiyY2tmvFy6ZjqkuAPyIZlKP6urdMxFMNMJrJarsZ+ghe8gIOOru0tv4zlWZkrMBiCLlip2HS9rO/4RZJf94Lc5Wqym/quhqTc8jmEjHx77ozatOqFyqgJ9uBnUFos23IfT20+Ji3XgBQlKx+1qBCmCZR0M8=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>nHucPSop9VVh3OzjN3g+fUD1dRheeUxIHeM7rjTwFvpWh7UwW7fc6ERTa874r9LkCtXlALj7ns/5Bbvmsh6jHZLBGccN/GMqU2SKuR4lwbVTpyZZZF8lxEeeg9fdR6exokp/0WUIyo/zSvg3fQI2C8g6w5pA9RewGNiylTMdyZ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB2TCCAUKgAwIBAgIQamXusrDhAKFPkeP10ZgOLzANBgkqhkiG9w0BAQsFADArMSkwJwYDVQQDHiAARABPAE0AXwBDAE8ATwBSAEQAXABsAGEAVgBlAGcAYTAeFw0xNTEwMjgyMDU1MjhaFw0xNjEwMjgwMjU1MjhaMCsxKTAnBgNVBAMeIABEAE8ATQBfAEMATwBPAFIARABcAGwAYQBWAGUAZwBhMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCce5w9Kin1VWHc7OM3eD59QPV1GF55TEgd4zuuNPAW+laHtTBbt9zoRFNrzviv0uQK1eUAuPuez/kFu+ayHqMdksEZxw38YypTZIq5HiXBtVOnJllkXyXER56D191Hp7GiSn/RZQjKj/NK+Dd9AjYLyDrDmkD1F7AY2LKVMx3JnQIDAQABMA0GCSqGSIb3DQEBCwUAA4GBAIiqHEtc2N6IJqf5ru9z3CeusRo5LVGbkdjYR83vBF7wlCWFcn2A0qlX53kDN3ezJif2PpMEHp0+iEgVhc+PGk9Iv2nW1xblmMCeu1uK4GpOdudBCO+o1PPP0gJo029+VfjfjmoXDoNheDLUjjrYnFDZLyb6jz3bW1xl7ZazprXr</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
