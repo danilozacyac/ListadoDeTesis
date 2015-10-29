@@ -29,6 +29,8 @@ namespace ListadoDeTesis
             CbxColor.DataContext = new Colores().GetColores();
             TxtMaterias.Text = String.Empty;
             TxtOficio.Text = String.Empty;
+
+            CbxColor.SelectedIndex = 0;
             
         }
 

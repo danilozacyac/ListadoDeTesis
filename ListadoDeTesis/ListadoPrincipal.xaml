@@ -41,6 +41,10 @@
                     </telerik:RadRibbonButton>
 
                 </telerik:RadRibbonGroup>
+                <telerik:RadRibbonGroup Header="">
+                    <telerik:RadRibbonButton IsEnabled="False" Content="Ver Envios" x:Name="VerEnvios" Size="Large" LargeImage="Resources/1425495918_schedule.png" Click="VerEnvios_Click"/>
+
+                </telerik:RadRibbonGroup>
             </telerik:RadRibbonTab>
         </telerik:RadRibbonView>
         <telerik:RadGridView Name="GTesis"

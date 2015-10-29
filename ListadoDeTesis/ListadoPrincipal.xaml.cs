@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using ListadoDeTesis.Dto;
 using ListadoDeTesis.Models;
+using ListadoDeTesis.Stats;
 using MantesisVerIusCommonObjects.Dto;
 using Telerik.Windows.Controls;
 
@@ -138,6 +139,12 @@ namespace ListadoDeTesis
                 BtnAddTesis.IsEnabled = false;
                 BtnPrint.IsEnabled = false;
             }
+        }
+
+        private void VerEnvios_Click(object sender, RoutedEventArgs e)
+        {
+            TesisPorAbogadoPorFecha stat = new TesisPorAbogadoPorFecha();
+            stat.ShowDialog();
         }
     }
 }

@@ -61,7 +61,7 @@
         <telerik:Label Margin="43,40,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
-                       Content="Núm. de Tesis:" />
+                       Content="Núm. de tesis:" />
         <TextBox x:Name="TxtNumTesis"
                  Width="146"
                  Height="23"
@@ -144,7 +144,7 @@
         <Label Margin="420,130,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Content="Fecha de envio:" />
+               Content="Fecha de envío:" />
         <telerik:RadDatePicker x:Name="DpFechaEnvio"
                                Width="182"
                                Margin="518,132,0,0"
@@ -153,7 +153,7 @@
         <Label Margin="43,166,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Content="Rubro:"
+               Content="Título y subtítulo:"
                FontSize="14"
                FontWeight="Bold" />
 
@@ -168,7 +168,7 @@
                    Margin="43,15,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   Content="Materia sugerida por la sala"
+                   Content="Materia sugerida por la Sala"
                    FontSize="14"
                    FontWeight="Bold" />
             <TextBox x:Name="TxtMaterias"
@@ -192,7 +192,8 @@
                                Margin="555,166,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
-                               Content="Ver Materias" Click="BtnMateriasSga_Click" />
+                               Click="BtnMateriasSga_Click"
+                               Content="Ver Materias" />
         </Grid>
         <!--  Grid 2  -->
 

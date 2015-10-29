@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using ListadoDeTesis.Dto;
+using ListadoDeTesis.Singletons;
 using Microsoft.Office.Interop.Word;
 using ScjnUtilities;
 
@@ -56,7 +57,7 @@ namespace ListadoDeTesis.Reportes
                 oPara1.Range.Text = "SISTEMATIZACIÓN DE TESIS";
                 oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.InsertParagraphAfter();
-                oPara1.Range.Text = "RELACIÓN DE TESIS PARA PUBLICAR EN EL SEMANARIO JUDICIAL DE LA FEDERACIÓN Y SU GACETA";
+                oPara1.Range.Text = "RELACIÓN DE TESIS PARA PUBLICAR EN EL SEMANARIO JUDICIAL DE LA FEDERACIÓN Y EN SU GACETA";
                 oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.Text = "(AL " + DateTimeUtilities.ToLongDateFormat(fechaEnvio).ToUpper() + ")";
@@ -160,7 +161,9 @@ namespace ListadoDeTesis.Reportes
             if (tesisPorImprimir.Count > 0)
             {
                 if (idSubInstancia == 10002)
-                    this.AddTableSegundaSala(tesisPorImprimir, this.GetTableTitle(idInstancia, idSubInstancia), this.GetTipoTesisTitle(tipoTesis));
+                    this.AddTableSegundaSala(tesisPorImprimir, this.GetTableTitle(idInstancia, idSubInstancia), this.GetTipoTesisTitle(tipoTesis), idSubInstancia);
+                else if (idInstancia == 1 || idInstancia == 4)
+                    this.AddTableSegundaSala(tesisPorImprimir, this.GetTableTitle(idInstancia, idSubInstancia), this.GetTipoTesisTitle(tipoTesis), idInstancia);
                 else
                     this.AddTableContent(tesisPorImprimir, this.GetTableTitle(idInstancia, idSubInstancia), this.GetTipoTesisTitle(tipoTesis));
 
@@ -226,8 +229,16 @@ namespace ListadoDeTesis.Reportes
         }
 
 
-        private void AddTableSegundaSala(List<Tesis> tesisAImprimir, string tabletitle, string tipoTesis)
+        private void AddTableSegundaSala(List<Tesis> tesisAImprimir, string tabletitle, string tipoTesis, int idInstancia)
         {
+            List<int> cellWidth;
+
+            if (idInstancia == 10002)
+                cellWidth = new List<int>() { 60, 80, 200, 100 };
+            else
+                cellWidth = new List<int>() { 60, 100, 80, 200 };
+
+
             int fila = 1;
             Range wrdRng = oDoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
 
@@ -240,10 +251,10 @@ namespace ListadoDeTesis.Reportes
             oTable.Range.Font.Bold = 0;
             oTable.Borders.Enable = 1;
 
-            oTable.Columns[1].SetWidth(60, WdRulerStyle.wdAdjustSameWidth);
-            oTable.Columns[2].SetWidth(80, WdRulerStyle.wdAdjustSameWidth);
-            oTable.Columns[3].SetWidth(200, WdRulerStyle.wdAdjustSameWidth);
-            oTable.Columns[4].SetWidth(100, WdRulerStyle.wdAdjustSameWidth);
+            oTable.Columns[1].SetWidth(cellWidth[0], WdRulerStyle.wdAdjustSameWidth);
+            oTable.Columns[2].SetWidth(cellWidth[1], WdRulerStyle.wdAdjustSameWidth);
+            oTable.Columns[3].SetWidth(cellWidth[2], WdRulerStyle.wdAdjustSameWidth);
+            oTable.Columns[4].SetWidth(cellWidth[3], WdRulerStyle.wdAdjustSameWidth);
 
             oTable.Rows[fila].Cells[1].Merge(oTable.Rows[fila].Cells[4]);
             oTable.Rows[fila].Range.Text = tabletitle;
@@ -255,31 +266,73 @@ namespace ListadoDeTesis.Reportes
 
             fila++;
 
-            oTable.Cell(fila, 1).Range.Text = "Consecutivo";
-
-            oTable.Cell(fila, 2).Range.Text = "Núm. de identificación de la tesis";
-            oTable.Cell(fila, 3).Range.Text = "Título y subtítulo";
-            oTable.Cell(fila, 4).Range.Text = "Materia Sugerida por la Sala";
-
-            fila++;
-            int consecutivo = 1;
-
-            foreach (Tesis print in tesisAImprimir)
+            if (idInstancia == 10002)
             {
-                WdColorIndex cellColor = this.GetCellColor(print.IdColor);
-                oTable.Cell(fila, 1).Range.Text = consecutivo.ToString();
-                oTable.Cell(fila, 1).Range.Font.ColorIndex = cellColor;
-                oTable.Cell(fila, 2).Range.Text = print.ClaveTesis;
-                oTable.Cell(fila, 2).Range.Font.ColorIndex = cellColor;
-                oTable.Cell(fila, 3).Range.Text = print.Rubro;
-                oTable.Cell(fila, 3).Range.Font.ColorIndex = cellColor;
-                oTable.Cell(fila, 3).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
-                oTable.Cell(fila, 4).Range.Text = print.MateriaAsignada;
-                oTable.Cell(fila, 4).Range.Font.Size = 8;
-                oTable.Cell(fila, 4).Range.Font.ColorIndex = cellColor;
+                
+
+                oTable.Cell(fila, 1).Range.Text = "Consecutivo";
+
+                oTable.Cell(fila, 2).Range.Text = "Núm. de identificación de la tesis";
+                oTable.Cell(fila, 3).Range.Text = "Título y subtítulo";
+                oTable.Cell(fila, 4).Range.Text = "Materia Sugerida por la Sala";
 
                 fila++;
-                consecutivo++;
+                int consecutivo = 1;
+
+                foreach (Tesis print in tesisAImprimir)
+                {
+                    WdColorIndex cellColor = this.GetCellColor(print.IdColor);
+                    oTable.Cell(fila, 1).Range.Text = consecutivo.ToString();
+                    oTable.Cell(fila, 1).Range.Font.ColorIndex = cellColor;
+                    oTable.Cell(fila, 2).Range.Text = print.ClaveTesis;
+                    oTable.Cell(fila, 2).Range.Font.ColorIndex = cellColor;
+                    oTable.Cell(fila, 3).Range.Text = print.Rubro;
+                    oTable.Cell(fila, 3).Range.Font.ColorIndex = cellColor;
+                    oTable.Cell(fila, 3).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
+                    oTable.Cell(fila, 4).Range.Text = print.Rubro;
+                    oTable.Cell(fila, 4).Range.Font.Size = 8;
+                    oTable.Cell(fila, 4).Range.Font.ColorIndex = cellColor;
+
+                    fila++;
+                    consecutivo++;
+                }
+            }
+            else
+            {
+              
+
+                oTable.Cell(fila, 1).Range.Text = "Consecutivo";
+                oTable.Cell(fila, 2).Range.Text = "Organismo";
+                oTable.Cell(fila, 3).Range.Text = "Núm. de identificación de la tesis";
+                oTable.Cell(fila, 4).Range.Text = "Título y subtítulo";
+
+                fila++;
+                int consecutivo = 1;
+
+                
+
+                foreach (Tesis print in tesisAImprimir)
+                {
+                    WdColorIndex cellColor = this.GetCellColor(print.IdColor);
+                    oTable.Cell(fila, 1).Range.Text = consecutivo.ToString();
+                    oTable.Cell(fila, 1).Range.Font.ColorIndex = cellColor;
+                    oTable.Cell(fila, 2).Range.Text = (from n in OrganismosSingleton.Organismos
+                                                       where n.IdOrganismo == print.IdSubInstancia
+                                                       select n.Organismo).ToList()[0];
+                    oTable.Cell(fila, 2).Range.Font.ColorIndex = cellColor;
+                    oTable.Cell(fila, 2).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
+                    oTable.Cell(fila, 3).Range.Text = print.ClaveTesis;
+                    oTable.Cell(fila, 3).Range.Font.ColorIndex = cellColor;
+                    oTable.Cell(fila, 3).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                    oTable.Cell(fila, 4).Range.Text = print.Rubro;
+                    oTable.Cell(fila, 4).Range.Font.Size = 8;
+                    oTable.Cell(fila, 4).Range.Font.ColorIndex = cellColor;
+                    oTable.Cell(fila, 4).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
+
+                    fila++;
+                    consecutivo++;
+                }
+
             }
         }
 

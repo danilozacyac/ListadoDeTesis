@@ -7,9 +7,10 @@
         Height="450"
         AllowsTransparency="True"
         Background="Transparent"
+        Icon="Resources/listLawyer.ico"
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None" Icon="Resources/listLawyer.ico">
+        WindowStyle="None">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
