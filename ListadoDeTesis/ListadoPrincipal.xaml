@@ -22,7 +22,8 @@
         <telerik:RadRibbonView VerticalAlignment="Top">
             <telerik:RadRibbonTab Header="Opciones">
                 <telerik:RadRibbonGroup>
-                    <telerik:RadRibbonButton x:Name="BtnAddTesis" Click="RadRibbonButton_Click"
+                    <telerik:RadRibbonButton x:Name="BtnAddTesis"
+                                             Click="RadRibbonButton_Click"
                                              LargeImage="Resources/1425495838_add-notes.png"
                                              Size="Large">
                         <StackPanel Orientation="Vertical">
@@ -30,17 +31,19 @@
                             <TextBlock HorizontalAlignment="Center" Text="Tesis" />
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="BtnMisTesis" 
+                    <telerik:RadRibbonButton x:Name="BtnMisTesis"
+                                             Click="BtnMisTesis_Click"
                                              LargeImage="Resources/1425495849_user.png"
-                                             Size="Large" Click="BtnMisTesis_Click">
+                                             Size="Large">
                         <StackPanel Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="Ver" />
                             <TextBlock HorizontalAlignment="Center" Text="mis tesis" />
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="BtnTodasTesis" 
+                    <telerik:RadRibbonButton x:Name="BtnTodasTesis"
+                                             Click="BtnTodasTesis_Click"
                                              LargeImage="Resources/1425495848_group.png"
-                                             Size="Large" Click="BtnTodasTesis_Click">
+                                             Size="Large">
                         <StackPanel Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="Ver" />
                             <TextBlock HorizontalAlignment="Center" Text="todas" />
@@ -48,7 +51,12 @@
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>
                 <telerik:RadRibbonGroup Header="Herramientas administrativas">
-                    <telerik:RadRibbonButton IsEnabled="False" Content="Ver Envios" x:Name="BtnVerEnvios" Size="Large" LargeImage="Resources/1425495918_schedule.png" Click="VerEnvios_Click"/>
+                    <telerik:RadRibbonButton x:Name="BtnVerEnvios"
+                                             Click="VerEnvios_Click"
+                                             Content="Ver Envios"
+                                             IsEnabled="False"
+                                             LargeImage="Resources/1425495918_schedule.png"
+                                             Size="Large" />
                     <telerik:RadRibbonButton x:Name="BtnPrint"
                                              Click="BtnPrint_Click"
                                              LargeImage="Resources/printer_blue.png"

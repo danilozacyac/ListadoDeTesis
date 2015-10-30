@@ -29,6 +29,7 @@ namespace ListadoDeTesis
          * */
 
 
+
         private ObservableCollection<Tesis> listaTesis;
 
         public ListadoPrincipal(ObservableCollection<Tesis> listaTesis)
