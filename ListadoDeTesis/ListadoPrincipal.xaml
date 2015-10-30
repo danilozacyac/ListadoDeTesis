@@ -1,11 +1,12 @@
 ﻿<telerik:RadWindow x:Class="ListadoDeTesis.ListadoPrincipal"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:UIControls="clr-namespace:UIControls;assembly=UIControls"
                    xmlns:converter="clr-namespace:ListadoDeTesis.Converters"
                    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
                    Width="600"
                    Height="300"
-                   Header="ListadoPrincipal"
+                   Header="Coordinación de Compilación y Sistematización de Tesis"
                    Loaded="RadWindow_Loaded"
                    WindowState="Maximized">
     <telerik:RadWindow.Resources>
@@ -17,11 +18,12 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <telerik:RadRibbonView VerticalAlignment="Top">
+        <telerik:RadRibbonView VerticalAlignment="Top" ApplicationName="Listado de Tesis Enviadas para su publicación en el Semanario">
             <telerik:RadRibbonTab Header="Opciones">
-                <telerik:RadRibbonGroup>
+                <telerik:RadRibbonGroup Header="Tesis">
                     <telerik:RadRibbonButton x:Name="BtnAddTesis"
                                              Click="RadRibbonButton_Click"
                                              LargeImage="Resources/1425495838_add-notes.png"
@@ -69,8 +71,8 @@
                 </telerik:RadRibbonGroup>
             </telerik:RadRibbonTab>
         </telerik:RadRibbonView>
-        <telerik:RadGridView Name="GTesis"
-                             Grid.Row="1"
+        <telerik:RadGridView x:Name="GTesis"
+                             Grid.Row="2"
                              HorizontalAlignment="Stretch"
                              VerticalAlignment="Stretch"
                              AutoGenerateColumns="False"
@@ -90,13 +92,13 @@
                                             Header="Rubro"
                                             IsReadOnly="True" />
                 <telerik:GridViewDataColumn Width="Auto"
-                                            DataFormatString="{} {0:dd/MM/yyyy}"
+                                            DataFormatString=" {0:dd/MM/yyyy}"
                                             DataMemberBinding="{Binding FechaAltaSistema}"
                                             Header="Fecha de Alta"
                                             IsFilterable="False"
                                             IsReadOnly="True" />
                 <telerik:GridViewDataColumn Width="Auto"
-                                            DataFormatString="{} {0:dd/MM/yyyy}"
+                                            DataFormatString=" {0:dd/MM/yyyy}"
                                             DataMemberBinding="{Binding FechaEnvio}"
                                             Header="Fecha de envio"
                                             IsFilterable="False"
@@ -134,11 +136,18 @@
                 </telerik:GridViewDataColumn>
             </telerik:RadGridView.Columns>
             <telerik:RadGridView.RowStyle>
-                <Style TargetType="telerik:GridViewRow">
+                <Style TargetType="{x:Type telerik:GridViewRow}">
                     <Setter Property="Background" Value="{Binding Tatj, Converter={StaticResource rowColor}}" />
                     <Setter Property="Foreground" Value="{Binding IdColor, Converter={StaticResource fontColor}}" />
                 </Style>
             </telerik:RadGridView.RowStyle>
         </telerik:RadGridView>
+        <UIControls:SearchTextBox Grid.Row="1"
+                                  Height="25"
+                                  Margin="0,0,0,-0"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top"
+                                  LabelText="Buscar por rubro o número de tesis"
+                                  Search="SearchTextBox_Search" />
     </Grid>
 </telerik:RadWindow>

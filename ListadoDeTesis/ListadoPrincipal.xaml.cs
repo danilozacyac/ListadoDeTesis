@@ -28,7 +28,7 @@ namespace ListadoDeTesis
          * 10. Todo
          * */
 
-
+        private int queFiltro = 0;
 
         private ObservableCollection<Tesis> listaTesis;
 
@@ -44,6 +44,15 @@ namespace ListadoDeTesis
             this.SetPermisos();
             GTesis.DataContext = listaTesis;
 
+            var misTesis = (from n in listaTesis
+                            where n.IdUsuario == AccesoUsuarioModel.Llave
+                            select n);
+
+            if (misTesis.Count() == 0)
+            {
+                BtnMisTesis.IsEnabled = false;
+                BtnTodasTesis.IsEnabled = false;
+            }
         }
 
         public void ShowInTaskbar(RadWindow control, string title)
@@ -129,7 +138,7 @@ namespace ListadoDeTesis
             else if (AccesoUsuarioModel.Grupo == 2)
             {
                 BtnAddTesis.IsEnabled = false;
-                BtnPrint.IsEnabled = false;
+                BtnPrint.IsEnabled = true;
             }
             else if (AccesoUsuarioModel.Grupo == 3)
             {
@@ -154,6 +163,7 @@ namespace ListadoDeTesis
 
         private void BtnMisTesis_Click(object sender, RoutedEventArgs e)
         {
+            queFiltro = 1;
             GTesis.DataContext = (from n in listaTesis
                                   where n.IdUsuario == AccesoUsuarioModel.Llave
                                   select n);
@@ -161,7 +171,30 @@ namespace ListadoDeTesis
 
         private void BtnTodasTesis_Click(object sender, RoutedEventArgs e)
         {
+            queFiltro = 0;
             GTesis.DataContext = listaTesis;
+        }
+
+        private void SearchTextBox_Search(object sender, RoutedEventArgs e)
+        {
+            String tempString = ((TextBox)sender).Text.ToUpper();
+
+            if (!String.IsNullOrEmpty(tempString))
+            {
+                if (queFiltro == 0)
+                    GTesis.DataContext = (from n in listaTesis
+                                          where n.ClaveTesis.ToUpper().Contains(tempString) || n.Rubro.ToUpper().Contains(tempString)
+                                          select n).ToList();
+                else
+                {
+                    GTesis.DataContext = (from n in listaTesis
+                                          where (n.ClaveTesis.ToUpper().Contains(tempString) || n.Rubro.ToUpper().Contains(tempString))
+                                                    && n.IdUsuario == AccesoUsuarioModel.Llave
+                                          select n).ToList();
+                }
+            }
+            else
+                GTesis.DataContext = listaTesis;
         }
     }
 }
