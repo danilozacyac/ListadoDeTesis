@@ -17,11 +17,24 @@ namespace ListadoDeTesis
     public partial class AddTesis
     {
         private ObservableCollection<Tesis> listaTesis;
+        private Tesis miTesis;
+        private bool isUpdate = false;
 
+        /// <summary>
+        /// Agrega una tesis al listado existente
+        /// </summary>
+        /// <param name="listaTesis"></param>
         public AddTesis(ObservableCollection<Tesis> listaTesis)
         {
             InitializeComponent();
             this.listaTesis = listaTesis;
+        }
+
+        public AddTesis(Tesis miTesis)
+        {
+            InitializeComponent();
+            isUpdate = true;
+            this.miTesis = miTesis;
         }
 
         private void RadWindow_Loaded(object sender, RoutedEventArgs e)
@@ -31,6 +44,9 @@ namespace ListadoDeTesis
             TxtOficio.Text = String.Empty;
 
             CbxColor.SelectedIndex = 0;
+
+            if(isUpdate)
+                this.FillData();
             
         }
 
@@ -92,24 +108,33 @@ namespace ListadoDeTesis
             }
 
             Organismos selectedOrganismo = CbxSubInstancia.SelectedItem as Organismos;
-            Colores color = CbxColor.SelectedItem as Colores; 
+            Colores color = CbxColor.SelectedItem as Colores;
 
-            Tesis newTesis = new Tesis();
-            newTesis.ClaveTesis = TxtNumTesis.Text;
-            newTesis.IdInstancia = selectedOrganismo.IdInstancia;
-            newTesis.IdSubInstancia = selectedOrganismo.IdOrganismo;
-            newTesis.OrdenInstancia = selectedOrganismo.OrdenImpresion;
-            newTesis.IdColor = color.IdColor;
-            newTesis.Tatj = (RadJuris.IsChecked == true) ? 1 : 0;
-            newTesis.Rubro = TxtRubro.Text;
-            newTesis.FechaEnvio = DpFechaEnvio.SelectedDate;
-            newTesis.FechaAltaSistema = DateTime.Now;
-            newTesis.MateriaAsignada = TxtMaterias.Text;
-            newTesis.Oficio = TxtOficio.Text;
+            if (!isUpdate)
+                miTesis = new Tesis();
 
-            new TesisModel().SetNewTesis(newTesis);
+            miTesis.ClaveTesis = TxtNumTesis.Text;
+            miTesis.IdInstancia = selectedOrganismo.IdInstancia;
+            miTesis.IdSubInstancia = selectedOrganismo.IdOrganismo;
+            miTesis.OrdenInstancia = selectedOrganismo.OrdenImpresion;
+            miTesis.IdColor = color.IdColor;
+            miTesis.Tatj = (RadJuris.IsChecked == true) ? 1 : 0;
+            miTesis.Rubro = TxtRubro.Text;
+            miTesis.FechaEnvio = DpFechaEnvio.SelectedDate;
+            miTesis.FechaAltaSistema = DateTime.Now;
+            miTesis.MateriaAsignada = TxtMaterias.Text;
+            miTesis.Oficio = TxtOficio.Text;
 
-            listaTesis.Add(newTesis);
+            if (!isUpdate)
+            {
+                new TesisModel().SetNewTesis(miTesis);
+                listaTesis.Add(miTesis);
+            }
+            else
+            {
+                new TesisModel().UpdateTesis(miTesis);
+            }
+
 
             this.Close();
         }
@@ -141,6 +166,38 @@ namespace ListadoDeTesis
             relation.ShowDialog();
             TxtMaterias.Text = RelacionaMateriaSga.textoDeLasMaterias;
             RelacionaMateriaSga.textoDeLasMaterias = String.Empty;
+        }
+
+
+        private void FillData()
+        {
+            TxtNumTesis.Text = miTesis.ClaveTesis;
+
+            if (miTesis.Tatj == 1)
+                RadJuris.IsChecked = true;
+            else
+                RadAislada.IsChecked = true;
+
+            CbxColor.SelectedValue = miTesis.IdColor;
+
+            if (miTesis.IdInstancia == 100)
+                RadCorte.IsChecked = true;
+            else if (miTesis.IdInstancia == 1)
+                RadTribunal.IsChecked = true;
+            else
+                RadPlenos.IsChecked = true;
+
+            CbxSubInstancia.SelectedValue = miTesis.IdSubInstancia;
+
+            DpFechaEnvio.SelectedDate = miTesis.FechaEnvio;
+
+            TxtRubro.Text = miTesis.Rubro;
+
+            if (miTesis.IdSubInstancia == 10002)
+            {
+                TxtMaterias.Text = miTesis.MateriaAsignada;
+                TxtOficio.Text = miTesis.Oficio;
+            }
         }
     }
 }

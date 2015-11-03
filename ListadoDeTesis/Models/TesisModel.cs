@@ -112,7 +112,7 @@ namespace ListadoDeTesis.Models
             OleDbDataReader reader = null;
 
             String sqlCadena = "SELECT T.*,B.* FROM Tesis T INNER JOIN Bitacora B ON T.IdTesis = B.IdTesis " + 
-                "ORDER BY B.FechaAltaInt desc, T.RubroStr asc";
+                "ORDER BY T.FechaRealInt desc, T.RubroStr asc";
 
             try
             {
@@ -316,12 +316,98 @@ namespace ListadoDeTesis.Models
             return listaTesis;
         }
 
+        /// <summary>
+        /// Actualiza la información de la tesis antes de que sea validada
+        /// </summary>
+        /// <param name="tesis"></param>
+        public void UpdateTesis(Tesis tesis)
+        {
+            OleDbConnection connection = new OleDbConnection(connectionString);
+
+            string sSql;
+            OleDbDataAdapter dataAdapter;
+
+            DataSet dataSet = new DataSet();
+            DataRow dr;
+
+            try
+            {
+
+                string sqlCadena = "SELECT * FROM Tesis WHERE IdTesis = " + tesis.IdTesis;
+
+                dataAdapter = new OleDbDataAdapter();
+                dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, connection);
+
+                dataAdapter.Fill(dataSet, "Tesis");
+
+                dr = dataSet.Tables["Tesis"].Rows[0];
+                dr.BeginEdit();
+                dr["IdTesis"] = tesis.IdTesis;
+                dr["Tesis"] = tesis.ClaveTesis;
+                dr["Rubro"] = tesis.Rubro;
+                dr["RubroStr"] = StringUtilities.PrepareToAlphabeticalOrder(tesis.Rubro);
+                dr["Tatj"] = tesis.Tatj;
+                dr["IdInstancia"] = tesis.IdInstancia;
+                dr["IdSubInstancia"] = tesis.IdSubInstancia;
+                dr["OrdenInstancia"] = tesis.OrdenInstancia;
+                dr["IdColor"] = tesis.IdColor;
+                dr["MateriaAsignada"] = tesis.MateriaAsignada;
+                dr["Oficio"] = tesis.Oficio;
+                dr["FechaEnvio"] = tesis.FechaEnvio;
+                dr["FechaEnvioInt"] = DateTimeUtilities.DateToInt(tesis.FechaEnvio);
+                dr.EndEdit();
+
+                dataAdapter.UpdateCommand = connection.CreateCommand();
+
+                sSql = "UPDATE Tesis SET Tesis = @Tesis,Rubro = @Rubro,RubroStr = @RubroStr,Tatj = @Tatj,IdInstancia = @IdInstancia, " + 
+                       "IdSubInstancia = @IdSubInstancia,OrdenInstancia = @OrdenInstancia,IdColor = @IdColor," + 
+                       "MateriaAsignada = @MateriaAsignada,Oficio = @Oficio,FechaEnvio = @FechaEnvio,FechaEnvioInt = @FechaEnvioInt " +
+                       " WHERE IdTesis = @IdTesis";
+
+                dataAdapter.UpdateCommand.CommandText = sSql;
+
+                dataAdapter.UpdateCommand.Parameters.Add("@Tesis", OleDbType.VarChar, 0, "Tesis");
+                dataAdapter.UpdateCommand.Parameters.Add("@Rubro", OleDbType.VarChar, 0, "Rubro");
+                dataAdapter.UpdateCommand.Parameters.Add("@RubroStr", OleDbType.VarChar, 0, "RubroStr");
+                dataAdapter.UpdateCommand.Parameters.Add("@Tatj", OleDbType.Numeric, 0, "Tatj");
+                dataAdapter.UpdateCommand.Parameters.Add("@IdInstancia", OleDbType.Numeric, 0, "IdInstancia");
+                dataAdapter.UpdateCommand.Parameters.Add("@IdSubInstancia", OleDbType.Numeric, 0, "IdSubInstancia");
+                dataAdapter.UpdateCommand.Parameters.Add("@OrdenInstancia", OleDbType.Numeric, 0, "OrdenInstancia");
+                dataAdapter.UpdateCommand.Parameters.Add("@IdColor", OleDbType.Numeric, 0, "IdColor");
+                dataAdapter.UpdateCommand.Parameters.Add("@MateriaAsignada", OleDbType.VarChar, 0, "MateriaAsignada");
+                dataAdapter.UpdateCommand.Parameters.Add("@Oficio", OleDbType.VarChar, 0, "Oficio");
+                dataAdapter.UpdateCommand.Parameters.Add("@FechaEnvio", OleDbType.Date, 0, "FechaEnvio");
+                dataAdapter.UpdateCommand.Parameters.Add("@FechaEnvioInt", OleDbType.Numeric, 0, "FechaEnvioInt");
+                dataAdapter.UpdateCommand.Parameters.Add("@IdTesis", OleDbType.Numeric, 0, "IdTesis");
+
+                dataAdapter.Update(dataSet, "Tesis");
+                dataSet.Dispose();
+                dataAdapter.Dispose();
+
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
 
         /// <summary>
         /// Actualiza la fecha real de entrega cuando la fecha de entrega capturada es correcta
         /// </summary>
-        /// <param name="tesis"></param>
-        public void UpdateTesis(Tesis tesis)
+        /// <param name="idTesis">Identificador de la tesis que se esta validando</param>
+        ///<param name="fecha">Fecha capturada que se esta validando</param>
+        ///<param name="usuarioValida">Identificador del usuario que esta validando la fecha de entrega</param>
+        public void UpdateTesis(int idTesis,DateTime? fecha, int usuarioValida)
         {
             OleDbConnection connection = new OleDbConnection(connectionString);
             OleDbDataAdapter dataAdapter;
@@ -336,7 +422,7 @@ namespace ListadoDeTesis.Models
                 DataSet dataSet = new DataSet();
                 DataRow dr;
 
-                string sqlCadena = "SELECT * FROM Tesis WHERE IdTesis = " + tesis.IdTesis;
+                string sqlCadena = "SELECT * FROM Tesis WHERE IdTesis = " + idTesis;
 
                 dataAdapter = new OleDbDataAdapter();
                 dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, connection);
@@ -345,8 +431,8 @@ namespace ListadoDeTesis.Models
 
                 dr = dataSet.Tables[0].Rows[0];
                 dr.BeginEdit();
-                dr["FechaReal"] = tesis.FechaEnvio;
-                dr["FechaRealInt"] = DateTimeUtilities.DateToInt(tesis.FechaEnvio);
+                dr["FechaReal"] = fecha;
+                dr["FechaRealInt"] = DateTimeUtilities.DateToInt(fecha);
                 dr["IdUsuarioValida"] = AccesoUsuarioModel.Llave;
 
                 dr.EndEdit();
@@ -369,7 +455,7 @@ namespace ListadoDeTesis.Models
                 dataSet.Dispose();
                 dataAdapter.Dispose();
 
-                tesis.IdUsuarioValida = AccesoUsuarioModel.Llave;
+                usuarioValida = AccesoUsuarioModel.Llave;
             }
             catch (OleDbException ex)
             {

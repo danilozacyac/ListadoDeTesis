@@ -63,6 +63,26 @@ namespace ListadoDeTesis.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _1425495821_edit_notes {
+            get {
+                object obj = ResourceManager.GetObject("_1425495821_edit_notes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1425495828_reload {
+            get {
+                object obj = ResourceManager.GetObject("_1425495828_reload", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _1425495835_ok {
             get {
                 object obj = ResourceManager.GetObject("_1425495835_ok", resourceCulture);
@@ -116,6 +136,16 @@ namespace ListadoDeTesis.Properties {
         internal static System.Drawing.Bitmap _1425495918_schedule {
             get {
                 object obj = ResourceManager.GetObject("_1425495918_schedule", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _1425495925_delete_notes {
+            get {
+                object obj = ResourceManager.GetObject("_1425495925_delete_notes", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

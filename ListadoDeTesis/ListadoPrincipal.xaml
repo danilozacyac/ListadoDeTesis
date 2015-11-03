@@ -15,9 +15,9 @@
         <converter:TesisValidation x:Key="tesisValida" />
         <converter:MarkValidationConverter x:Key="fueValidada" />
     </telerik:RadWindow.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -30,6 +30,15 @@
                                              Size="Large">
                         <StackPanel Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="Agregar" />
+                            <TextBlock HorizontalAlignment="Center" Text="Tesis" />
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="BtnEditTesis"
+                                             Click="BtnEditTesis_Click"
+                                             LargeImage="Resources/1425495821_edit-notes.png"
+                                             Size="Large">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="Editar" />
                             <TextBlock HorizontalAlignment="Center" Text="Tesis" />
                         </StackPanel>
                     </telerik:RadRibbonButton>
@@ -49,6 +58,15 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="Ver" />
                             <TextBlock HorizontalAlignment="Center" Text="todas" />
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="BtnRecargarListado"
+                                             Click="BtnRecargarListado_Click"
+                                             LargeImage="Resources/1425495828_reload.png"
+                                             Size="Large">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="Recargar" />
+                            <TextBlock HorizontalAlignment="Center" Text="Listado" />
                         </StackPanel>
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>
@@ -71,83 +89,98 @@
                 </telerik:RadRibbonGroup>
             </telerik:RadRibbonTab>
         </telerik:RadRibbonView>
-        <telerik:RadGridView x:Name="GTesis"
-                             Grid.Row="2"
-                             HorizontalAlignment="Stretch"
-                             VerticalAlignment="Stretch"
-                             AutoGenerateColumns="False"
-                             CanUserDeleteRows="False"
-                             CanUserInsertRows="False"
-                             DataLoaded="GTesis_DataLoaded"
-                             ItemsSource="{Binding}"
-                             ShowGroupPanel="False">
-            <telerik:RadGridView.Columns>
-                <telerik:GridViewDataColumn Width="100"
-                                            DataMemberBinding="{Binding ClaveTesis}"
-                                            Header="Núm. tesis"
-                                            IsFilterable="False"
-                                            IsReadOnly="True" />
-                <telerik:GridViewDataColumn Width="*"
-                                            DataMemberBinding="{Binding Rubro}"
-                                            Header="Rubro"
-                                            IsReadOnly="True" />
-                <telerik:GridViewDataColumn Width="Auto"
-                                            DataFormatString=" {0:dd/MM/yyyy}"
-                                            DataMemberBinding="{Binding FechaAltaSistema}"
-                                            Header="Fecha de Alta"
-                                            IsFilterable="False"
-                                            IsReadOnly="True" />
-                <telerik:GridViewDataColumn Width="Auto"
-                                            DataFormatString=" {0:dd/MM/yyyy}"
-                                            DataMemberBinding="{Binding FechaEnvio}"
-                                            Header="Fecha de envio"
-                                            IsFilterable="False"
-                                            IsReadOnly="True" />
-                <telerik:GridViewDataColumn Width="Auto"
-                                            Header="Validar envio"
-                                            IsReadOnly="True">
-                    <telerik:GridViewDataColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Background="{Binding IdUsuarioValida, Converter={StaticResource fueValidada}}" Orientation="Horizontal">
-                                <Button x:Name="BtnValidaFecha"
-                                        Click="BtnValidaFecha_Click"
-                                        Cursor="Hand"
-                                        IsEnabled="{Binding IdUsuarioValida,
-                                                            Converter={StaticResource tesisValida}}"
-                                        Uid="{Binding IdTesis}">
-                                    <Image Width="32"
-                                           Height="32"
-                                           Source="Resources/1425495835_ok.png" />
-                                </Button>
-                                <Grid Width="15" />
-                                <Button x:Name="BtnAclaraFecha"
-                                        Click="BtnAclaraFecha_Click"
-                                        Cursor="Hand"
-                                        IsEnabled="{Binding IdUsuarioValida,
-                                                            Converter={StaticResource tesisValida}}"
-                                        Uid="{Binding IdTesis}">
-                                    <Image Width="32"
-                                           Height="32"
-                                           Source="Resources/1425495843_cancel.png" />
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </telerik:GridViewDataColumn.CellTemplate>
-                </telerik:GridViewDataColumn>
-            </telerik:RadGridView.Columns>
-            <telerik:RadGridView.RowStyle>
-                <Style TargetType="{x:Type telerik:GridViewRow}">
-                    <Setter Property="Background" Value="{Binding Tatj, Converter={StaticResource rowColor}}" />
-                    <Setter Property="Foreground" Value="{Binding IdColor, Converter={StaticResource fontColor}}" />
-                </Style>
-            </telerik:RadGridView.RowStyle>
-        </telerik:RadGridView>
-        <UIControls:SearchTextBox Grid.Row="1"
-                                  Height="25"
-                                  Margin="0,0,0,-0"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Top"
-                                  LabelText="Buscar por rubro o número de tesis"
-                                  Search="SearchTextBox_Search" />
+
+        <telerik:RadBusyIndicator x:Name="BusyIndicator"
+                                  Grid.Row="1"
+                                  IsIndeterminate="True"
+                                  telerik:StyleManager.Theme="Windows8Touch">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <telerik:RadGridView x:Name="GTesis"
+                                     Grid.Row="1"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"
+                                     AutoGenerateColumns="False"
+                                     CanUserDeleteRows="False"
+                                     CanUserInsertRows="False"
+                                     DataLoaded="GTesis_DataLoaded"
+                                     ItemsSource="{Binding}"
+                                     SelectionChanged="GTesis_SelectionChanged"
+                                     ShowGroupPanel="False">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Width="100"
+                                                    DataMemberBinding="{Binding ClaveTesis}"
+                                                    Header="Núm. tesis"
+                                                    IsFilterable="False"
+                                                    IsReadOnly="True" />
+                        <telerik:GridViewDataColumn Width="*"
+                                                    DataMemberBinding="{Binding Rubro}"
+                                                    Header="Rubro"
+                                                    IsReadOnly="True" />
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    DataFormatString=" {0:dd/MM/yyyy}"
+                                                    DataMemberBinding="{Binding FechaAltaSistema}"
+                                                    Header="Fecha de Alta"
+                                                    IsFilterable="False"
+                                                    IsReadOnly="True" />
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    DataFormatString=" {0:dd/MM/yyyy}"
+                                                    DataMemberBinding="{Binding FechaEnvio}"
+                                                    Header="Fecha de envio"
+                                                    IsFilterable="False"
+                                                    IsReadOnly="True" />
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="Validar envio"
+                                                    IsReadOnly="True">
+                            <telerik:GridViewDataColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Background="{Binding IdUsuarioValida, Converter={StaticResource fueValidada}}" Orientation="Horizontal">
+                                        <Button x:Name="BtnValidaFecha"
+                                                Click="BtnValidaFecha_Click"
+                                                Cursor="Hand"
+                                                IsEnabled="{Binding IdUsuarioValida,
+                                                                    Converter={StaticResource tesisValida}}"
+                                                Uid="{Binding IdTesis}">
+                                            <Image Width="32"
+                                                   Height="32"
+                                                   Source="Resources/1425495835_ok.png" />
+                                        </Button>
+                                        <Grid Width="15" />
+                                        <Button x:Name="BtnAclaraFecha"
+                                                Click="BtnAclaraFecha_Click"
+                                                Cursor="Hand"
+                                                IsEnabled="{Binding IdUsuarioValida,
+                                                                    Converter={StaticResource tesisValida}}"
+                                                Uid="{Binding IdTesis}">
+                                            <Image Width="32"
+                                                   Height="32"
+                                                   Source="Resources/1425495843_cancel.png" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellTemplate>
+                        </telerik:GridViewDataColumn>
+                    </telerik:RadGridView.Columns>
+                    <telerik:RadGridView.RowStyle>
+                        <Style TargetType="{x:Type telerik:GridViewRow}">
+                            <Setter Property="Background" Value="{Binding Tatj, Converter={StaticResource rowColor}}" />
+                            <Setter Property="Foreground" Value="{Binding IdColor, Converter={StaticResource fontColor}}" />
+                        </Style>
+                    </telerik:RadGridView.RowStyle>
+                </telerik:RadGridView>
+                <UIControls:SearchTextBox x:Name="Buscador"
+                                          Grid.Row="0"
+                                          Height="25"
+                                          Margin="0,0,0,0"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Top"
+                                          LabelText="Buscar por rubro o número de tesis"
+                                          Search="SearchTextBox_Search" />
+            </Grid>
+        </telerik:RadBusyIndicator>
     </Grid>
+
 </telerik:RadWindow>

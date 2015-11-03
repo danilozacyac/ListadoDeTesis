@@ -152,6 +152,7 @@ namespace ListadoDeTesis.Dto
             set
             {
                 this.tatj = value;
+                this.OnPropertyChanged("Tatj");
             }
         }
 

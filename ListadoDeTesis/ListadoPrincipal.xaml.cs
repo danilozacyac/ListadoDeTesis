@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,11 +33,15 @@ namespace ListadoDeTesis
 
         private ObservableCollection<Tesis> listaTesis;
 
+        private Tesis selectedTesis;
+
         public ListadoPrincipal(ObservableCollection<Tesis> listaTesis)
         {
             InitializeComponent();
             this.listaTesis = listaTesis;
             this.ShowInTaskbar(this, "Listado de Tesis");
+            worker.DoWork += this.WorkerDoWork;
+            worker.RunWorkerCompleted += WorkerRunWorkerCompleted;
         }
 
         private void RadWindow_Loaded(object sender, RoutedEventArgs e)
@@ -85,7 +90,7 @@ namespace ListadoDeTesis
                                      where n.IdTesis == id
                                      select n).ToList()[0];
 
-            new TesisModel().UpdateTesis(tesisPorValidar);
+            new TesisModel().UpdateTesis(tesisPorValidar.IdTesis, tesisPorValidar.FechaEnvio, tesisPorValidar.IdUsuarioValida);
 
         }
 
@@ -196,5 +201,73 @@ namespace ListadoDeTesis
             else
                 GTesis.DataContext = listaTesis;
         }
+
+        private void BtnRecargarListado_Click(object sender, RoutedEventArgs e)
+        {
+            Buscador.Text = String.Empty;
+            this.LaunchBusyIndicator();
+        }
+
+        private void GTesis_SelectionChanged(object sender, SelectionChangeEventArgs e)
+        {
+            selectedTesis = GTesis.SelectedItem as Tesis;
+
+            if (selectedTesis.IdUsuarioValida > 0)
+            {
+                BtnEditTesis.IsEnabled = false;
+                BtnEditTesis.ToolTip = "Las tesis que ya fueron validadas no pueden ser modificadas";
+            }
+            else
+            {
+                BtnEditTesis.IsEnabled = true;
+                BtnEditTesis.ToolTip = "Permite capturar la información de una tesis capturada con anterioridad";
+            }
+        }
+
+        private void BtnEditTesis_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedTesis == null)
+            {
+                MessageBox.Show("Selecciona la tesis que quieres modificar", "", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                AddTesis update = new AddTesis(selectedTesis);
+                update.ShowDialog();
+            }
+        }
+
+
+        #region Background Worker
+
+        private BackgroundWorker worker = new BackgroundWorker();
+
+        private void WorkerDoWork(object sender, DoWorkEventArgs e)
+        {
+            listaTesis = new TesisModel().GetTesis();
+        }
+
+        void WorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //Dispatcher.BeginInvoke(new Action<ObservableCollection<Organismos>>(this.UpdateGridDataSource), e.Result);
+            this.GTesis.DataContext = listaTesis;
+            this.BusyIndicator.IsBusy = false;
+            
+        }
+
+        private void LaunchBusyIndicator()
+        {
+            if (!worker.IsBusy)
+            {
+                this.BusyIndicator.IsBusy = true;
+                worker.RunWorkerAsync();
+            }
+        }
+
+        #endregion
+
+       
+
+        
     }
 }

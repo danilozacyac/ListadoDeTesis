@@ -26,7 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <UpdateUrl>\\172.28.33.26\ListaTesis\Updates\</UpdateUrl>
-    <ApplicationRevision>12</ApplicationRevision>
+    <ApplicationRevision>13</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -314,6 +314,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\1425495848_group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\1425495828_reload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\1425495821_edit-notes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\1425495925_delete-notes.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
