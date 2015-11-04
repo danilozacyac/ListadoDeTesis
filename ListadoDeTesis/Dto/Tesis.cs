@@ -215,6 +215,6 @@ namespace ListadoDeTesis.Dto
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        #endregion // INotifyPropertyChanged Members
+        #endregion i// INotifyPropertyChanged Members
     }
 }

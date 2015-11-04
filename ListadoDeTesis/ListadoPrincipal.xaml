@@ -60,6 +60,15 @@
                             <TextBlock HorizontalAlignment="Center" Text="todas" />
                         </StackPanel>
                     </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="BtnTesisPorValidar"
+                                             Click="BtnTesisPorValidar_Click"
+                                             LargeImage="Resources/edit_blue.png"
+                                             Size="Large">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="Tesis por" />
+                            <TextBlock HorizontalAlignment="Center" Text="Validar" />
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton x:Name="BtnRecargarListado"
                                              Click="BtnRecargarListado_Click"
                                              LargeImage="Resources/1425495828_reload.png"
@@ -84,6 +93,15 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="Imprimir" />
                             <TextBlock HorizontalAlignment="Center" Text="Listado" />
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="BtnReturnTesis"
+                                             Click="BtnReturnTesis_Click"
+                                             LargeImage="Resources/back.png"
+                                             Size="Large">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="Regresar" />
+                            <TextBlock HorizontalAlignment="Center" Text="tesis" />
                         </StackPanel>
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>

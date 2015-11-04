@@ -22,8 +22,8 @@ namespace ListadoDeTesis
          * Privilegios por Grupo
          * 
          * 1. Captura de tesis
-         * 2. Validar Fechas 
-         * 3. Validar Fechas, Capturar Tesis y Generar Reportes
+         * 2. Validar Fechas, Regresar Tesis
+         * 3. Validar Fechas, Capturar Tesis, Regresar Tesis y Generar Reportes
          * 4. 
          * 5.Generar reporte y ver estadísticas
          * 10. Todo
@@ -90,7 +90,7 @@ namespace ListadoDeTesis
                                      where n.IdTesis == id
                                      select n).ToList()[0];
 
-            new TesisModel().UpdateTesis(tesisPorValidar.IdTesis, tesisPorValidar.FechaEnvio, tesisPorValidar.IdUsuarioValida);
+            new TesisModel().UpdateTesis(tesisPorValidar.IdTesis, tesisPorValidar.FechaEnvio, tesisPorValidar);
 
         }
 
@@ -125,20 +125,22 @@ namespace ListadoDeTesis
         }
 
         /*
-        * Privilegios por Grupo
-        * 
-        * 1. Captura de tesis
-        * 2. Validar Fechas 
-        * 3. Validar Fechas, Capturar Tesis y Generar Reportes
-        * 4. 
-        * 5.Generar reporte y ver estadísticas
-        * 10. Todo
-        * */
+         * Privilegios por Grupo
+         * 
+         * 1. Captura de tesis
+         * 2. Validar Fechas, Regresar Tesis
+         * 3. Validar Fechas, Capturar Tesis, Regresar Tesis y Generar Reportes
+         * 4. 
+         * 5.Generar reporte y ver estadísticas
+         * 10. Todo
+         * */
         private void SetPermisos()
         {
             if (AccesoUsuarioModel.Grupo == 1)
             {
                 BtnPrint.IsEnabled = false;
+                BtnTesisPorValidar.Visibility = Visibility.Collapsed;
+                BtnReturnTesis.IsEnabled = false;
             }
             else if (AccesoUsuarioModel.Grupo == 2)
             {
@@ -178,6 +180,26 @@ namespace ListadoDeTesis
         {
             queFiltro = 0;
             GTesis.DataContext = listaTesis;
+        }
+        
+        private void BtnTesisPorValidar_Click(object sender, RoutedEventArgs e)
+        {
+            GTesis.DataContext = (from n in listaTesis
+                                  where n.IdUsuarioValida == 0
+                                  select n);
+        }
+
+        private void BtnReturnTesis_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedTesis != null)
+            {
+                MessageBoxResult result = MessageBox.Show("¿Estas segur@ de eliminar la validación de esta tesis?", "Atención", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    new TesisModel().InvalidaValidacion(selectedTesis);
+                }
+            }
         }
 
         private void SearchTextBox_Search(object sender, RoutedEventArgs e)
@@ -265,6 +287,10 @@ namespace ListadoDeTesis
         }
 
         #endregion
+
+        
+
+        
 
        
 

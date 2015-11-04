@@ -406,8 +406,8 @@ namespace ListadoDeTesis.Models
         /// </summary>
         /// <param name="idTesis">Identificador de la tesis que se esta validando</param>
         ///<param name="fecha">Fecha capturada que se esta validando</param>
-        ///<param name="usuarioValida">Identificador del usuario que esta validando la fecha de entrega</param>
-        public void UpdateTesis(int idTesis,DateTime? fecha, int usuarioValida)
+        ///<param name="tesis">Identificador del usuario que esta validando la fecha de entrega</param>
+        public void UpdateTesis(int idTesis,DateTime? fecha, Tesis tesis)
         {
             OleDbConnection connection = new OleDbConnection(connectionString);
             OleDbDataAdapter dataAdapter;
@@ -455,7 +455,7 @@ namespace ListadoDeTesis.Models
                 dataSet.Dispose();
                 dataAdapter.Dispose();
 
-                usuarioValida = AccesoUsuarioModel.Llave;
+                tesis.IdUsuarioValida = AccesoUsuarioModel.Llave;
             }
             catch (OleDbException ex)
             {
@@ -528,6 +528,72 @@ namespace ListadoDeTesis.Models
 
                 tesis.IdUsuarioValida = AccesoUsuarioModel.Llave;
                 tesis.FechaReal = fechaReal;
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// Invalida la validación previa de una tesis 
+        /// </summary>
+        /// <param name="tesis"></param>
+        public void InvalidaValidacion(Tesis tesis)
+        {
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbDataAdapter dataAdapter;
+            OleDbCommand cmd;
+            cmd = connection.CreateCommand();
+            cmd.Connection = connection;
+
+            try
+            {
+                connection.Open();
+
+                DataSet dataSet = new DataSet();
+                DataRow dr;
+
+                string sqlCadena = "SELECT * FROM Tesis WHERE IdTesis = " + tesis.IdTesis;
+
+                dataAdapter = new OleDbDataAdapter();
+                dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, connection);
+
+                dataAdapter.Fill(dataSet, "Tesis");
+
+                dr = dataSet.Tables[0].Rows[0];
+                dr.BeginEdit();
+                dr["IdUsuarioValida"] = 0;
+
+                dr.EndEdit();
+
+                dataAdapter.UpdateCommand = connection.CreateCommand();
+
+                string sSql = "UPDATE Tesis " +
+                              "SET IdUsuarioValida = @IdUsuarioValida" +
+                              " WHERE IdTesis = @IdTesis";
+
+                dataAdapter.UpdateCommand.CommandText = sSql;
+
+                dataAdapter.UpdateCommand.Parameters.Add("@IdUsuarioValida", OleDbType.Numeric, 0, "IdUsuarioValida");
+                dataAdapter.UpdateCommand.Parameters.Add("@IdTesis", OleDbType.Numeric, 0, "IdTesis");
+
+
+                dataAdapter.Update(dataSet, "Tesis");
+                dataSet.Dispose();
+                dataAdapter.Dispose();
+
+                tesis.IdUsuarioValida = 0;
             }
             catch (OleDbException ex)
             {
