@@ -92,7 +92,11 @@ namespace ListadoDeTesis.Models
         }
 
 
-
+        /// <summary>
+        /// Obtiene el número de tesis enviadas por abogado en fecha determinada
+        /// </summary>
+        /// <param name="fechaEnvio"></param>
+        /// <returns></returns>
         public List<Estadistica> GetTesis(DateTime? fechaEnvio)
         {
             List<Estadistica> listaTesis = new List<Estadistica>();
@@ -102,8 +106,8 @@ namespace ListadoDeTesis.Models
             OleDbDataReader reader = null;
 
             String sqlCadena = "SELECT Usuario, COUNT(Tesis.FechaReal) AS Total " +
-                                "FROM (Bitacora INNER JOIN Tesis ON Bitacora.IdTesis = Tesis.IdTesis) " + 
-                                " INNER JOIN Usuarios ON Bitacora.IdUsuario = Usuarios.Llave " +
+                                "FROM Tesis " + 
+                                " INNER JOIN Usuarios ON Tesis.IdUsuario = Usuarios.Llave " +
                                 " WHERE FechaReal = @FechaReal  GROUP BY Usuario";
 
             try

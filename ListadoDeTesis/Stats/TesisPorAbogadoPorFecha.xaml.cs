@@ -36,7 +36,7 @@ namespace ListadoDeTesis.Stats
         {
             TesisLawyer.DataContext = new StatsModel().GetTesis(DpFechaDeEnvio.SelectedDate);
             CbxAbogados.SelectedIndex = 0;
-            
+            CbxAbogados_SelectionChanged(null, null);
         }
 
         private void CbxAbogados_SelectionChanged(object sender, SelectionChangedEventArgs e)

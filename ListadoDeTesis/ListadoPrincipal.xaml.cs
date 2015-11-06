@@ -56,7 +56,7 @@ namespace ListadoDeTesis
             if (misTesis.Count() == 0)
             {
                 BtnMisTesis.IsEnabled = false;
-                BtnTodasTesis.IsEnabled = false;
+                BtnTodasTesis.IsEnabled = true;
             }
         }
 
@@ -91,6 +91,7 @@ namespace ListadoDeTesis
                                      select n).ToList()[0];
 
             new TesisModel().UpdateTesis(tesisPorValidar.IdTesis, tesisPorValidar.FechaEnvio, tesisPorValidar);
+            BtnEditTesis.IsEnabled = false;
 
         }
 
@@ -159,6 +160,7 @@ namespace ListadoDeTesis
             else if (AccesoUsuarioModel.Grupo == 10)
             {
                 BtnVerEnvios.IsEnabled = true;
+                BtnEditTesis.IsEnabled = true;
             }
         }
 
@@ -198,6 +200,7 @@ namespace ListadoDeTesis
                 if (result == MessageBoxResult.Yes)
                 {
                     new TesisModel().InvalidaValidacion(selectedTesis);
+                    BtnEditTesis.IsEnabled = true;
                 }
             }
         }

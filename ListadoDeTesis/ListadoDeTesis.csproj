@@ -26,7 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <UpdateUrl>\\172.28.33.26\ListaTesis\Updates\</UpdateUrl>
-    <ApplicationRevision>16</ApplicationRevision>
+    <ApplicationRevision>21</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -160,6 +160,9 @@
       <DependentUpon>SelectPeriodoTesis.xaml</DependentUpon>
     </Compile>
     <Compile Include="Singletons\OrganismosSingleton.cs" />
+    <Compile Include="Stats\NumTesisGenerales.xaml.cs">
+      <DependentUpon>NumTesisGenerales.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Stats\TesisPorAbogadoPorFecha.xaml.cs">
       <DependentUpon>TesisPorAbogadoPorFecha.xaml</DependentUpon>
     </Compile>
@@ -196,6 +199,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SelectPeriodoTesis.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Stats\NumTesisGenerales.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

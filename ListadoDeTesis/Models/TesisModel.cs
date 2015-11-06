@@ -50,15 +50,18 @@ namespace ListadoDeTesis.Models
                 dr["IdColor"] = tesis.IdColor;
                 dr["MateriaAsignada"] = tesis.MateriaAsignada;
                 dr["Oficio"] = tesis.Oficio;
+                dr["FechaAlta"] = DateTime.Now;
+                dr["FechaAltaInt"] = DateTimeUtilities.DateToInt(DateTime.Now);
                 dr["FechaEnvio"] = tesis.FechaEnvio;
                 dr["FechaEnvioInt"] = DateTimeUtilities.DateToInt(tesis.FechaEnvio);
+                dr["IdUsuario"] = AccesoUsuarioModel.Llave;
                 
                 dataSet.Tables["Tesis"].Rows.Add(dr);
 
                 dataAdapter.InsertCommand = connection.CreateCommand();
 
-                sSql = "INSERT INTO Tesis (IdTesis,Tesis,Rubro,RubroStr,Tatj,IdInstancia,IdSubInstancia,OrdenInstancia,IdColor,MateriaAsignada,Oficio,FechaEnvio,FechaEnvioInt) " +
-                       " VALUES (@IdTesis,@Tesis,@Rubro,@RubroStr,@Tatj,@IdInstancia,@IdSubInstancia,@OrdenInstancia,@IdColor,@MateriaAsignada,@Oficio,@FechaEnvio,@FechaEnvioInt)";
+                sSql = "INSERT INTO Tesis (IdTesis,Tesis,Rubro,RubroStr,Tatj,IdInstancia,IdSubInstancia,OrdenInstancia,IdColor,MateriaAsignada,Oficio,FechaAlta,FechaAltaInt,FechaEnvio,FechaEnvioInt,IdUsuario) " +
+                       " VALUES (@IdTesis,@Tesis,@Rubro,@RubroStr,@Tatj,@IdInstancia,@IdSubInstancia,@OrdenInstancia,@IdColor,@MateriaAsignada,@Oficio,@FechaAlta,@FechaAltaInt,@FechaEnvio,@FechaEnvioInt,@IdUsuario)";
 
                 dataAdapter.InsertCommand.CommandText = sSql;
 
@@ -73,14 +76,16 @@ namespace ListadoDeTesis.Models
                 dataAdapter.InsertCommand.Parameters.Add("@IdColor", OleDbType.Numeric, 0, "IdColor");
                 dataAdapter.InsertCommand.Parameters.Add("@MateriaAsignada", OleDbType.VarChar, 0, "MateriaAsignada");
                 dataAdapter.InsertCommand.Parameters.Add("@Oficio", OleDbType.VarChar, 0, "Oficio");
+                dataAdapter.InsertCommand.Parameters.Add("@FechaAlta", OleDbType.Date, 0, "FechaAlta");
+                dataAdapter.InsertCommand.Parameters.Add("@FechaAltaInt", OleDbType.Numeric, 0, "FechaAltaInt");
                 dataAdapter.InsertCommand.Parameters.Add("@FechaEnvio", OleDbType.Date, 0, "FechaEnvio");
                 dataAdapter.InsertCommand.Parameters.Add("@FechaEnvioInt", OleDbType.Numeric, 0, "FechaEnvioInt");
+                dataAdapter.InsertCommand.Parameters.Add("@IdUsuario", OleDbType.Numeric, 0, "IdUsuario");
 
                 dataAdapter.Update(dataSet, "Tesis");
                 dataSet.Dispose();
                 dataAdapter.Dispose();
 
-                this.SetNewBitacoraEntry(tesis);
 
             }
             catch (OleDbException ex)
@@ -111,8 +116,7 @@ namespace ListadoDeTesis.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT T.*,B.* FROM Tesis T INNER JOIN Bitacora B ON T.IdTesis = B.IdTesis " + 
-                "ORDER BY T.FechaRealInt desc, T.RubroStr asc";
+            String sqlCadena = "SELECT * FROM Tesis  ORDER BY FechaRealInt desc, RubroStr asc";
 
             try
             {
@@ -126,7 +130,7 @@ namespace ListadoDeTesis.Models
                     while (reader.Read())
                     {
                         Tesis tesis = new Tesis();
-                        tesis.IdTesis = Convert.ToInt32(reader["T.IdTesis"]);
+                        tesis.IdTesis = Convert.ToInt32(reader["IdTesis"]);
                         tesis.ClaveTesis = reader["Tesis"].ToString();
                         tesis.Rubro = reader["Rubro"].ToString();
                         tesis.Tatj = Convert.ToInt32(reader["tatj"]);
@@ -181,8 +185,8 @@ namespace ListadoDeTesis.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT T.*,B.* FROM Tesis T INNER JOIN Bitacora B ON T.IdTesis = B.IdTesis " +
-                "WHERE FechaReal = @FechaReal ORDER BY B.FechaAltaInt desc, T.RubroStr asc";
+            String sqlCadena = "SELECT * FROM Tesis " +
+                "WHERE FechaReal = @FechaReal ORDER BY FechaAltaInt desc, RubroStr asc";
 
             try
             {
@@ -197,7 +201,7 @@ namespace ListadoDeTesis.Models
                     while (reader.Read())
                     {
                         Tesis tesis = new Tesis();
-                        tesis.IdTesis = Convert.ToInt32(reader["T.IdTesis"]);
+                        tesis.IdTesis = Convert.ToInt32(reader["IdTesis"]);
                         tesis.ClaveTesis = reader["Tesis"].ToString();
                         tesis.Rubro = reader["Rubro"].ToString();
                         tesis.Tatj = Convert.ToInt32(reader["tatj"]);
@@ -257,8 +261,8 @@ namespace ListadoDeTesis.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT T.*,B.* FROM Tesis T INNER JOIN Bitacora B ON T.IdTesis = B.IdTesis " +
-                "WHERE FechaRealInt BETWEEN @Inicio AND @Final ORDER BY B.FechaAltaInt desc, T.RubroStr asc";
+            String sqlCadena = "SELECT * FROM Tesis  " +
+                "WHERE FechaRealInt BETWEEN @Inicio AND @Final ORDER BY FechaAltaInt desc, RubroStr asc";
 
             try
             {
@@ -274,7 +278,7 @@ namespace ListadoDeTesis.Models
                     while (reader.Read())
                     {
                         Tesis tesis = new Tesis();
-                        tesis.IdTesis = Convert.ToInt32(reader["T.IdTesis"]);
+                        tesis.IdTesis = Convert.ToInt32(reader["IdTesis"]);
                         tesis.ClaveTesis = reader["Tesis"].ToString();
                         tesis.Rubro = reader["Rubro"].ToString();
                         tesis.Tatj = Convert.ToInt32(reader["tatj"]);

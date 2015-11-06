@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ListadoDeTesis.Dto;
 using ListadoDeTesis.Models;
 using ListadoDeTesis.Reportes;
-using Telerik.Windows.Controls;
 
 namespace ListadoDeTesis
 {
@@ -24,8 +14,7 @@ namespace ListadoDeTesis
     /// </summary>
     public partial class SelectPeriodoTesis
     {
-        private DateTime? fechaInicio;
-        private DateTime? fechaFinal;
+        private DateTime? fechaEnvio;
 
         public SelectPeriodoTesis()
         {
@@ -36,15 +25,12 @@ namespace ListadoDeTesis
 
         private void RadWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            DpUltima.SelectedDate = DateTime.Now.AddDays(-7);
+            ObservableCollection<DateTime> blakOutDate = new StatsModel().GetEnvioBlackOutDates();
 
-            DpSiguiente.SelectableDateStart = DpUltima.SelectedDate.Value.AddDays(1);
-        }
+            DpSiguiente.BlackoutDates = blakOutDate;
+            DpSiguiente.SelectableDateStart = blakOutDate[0];
+            DpSiguiente.SelectableDateEnd = blakOutDate[blakOutDate.Count - 1];
 
-        private void DpUltima_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DpSiguiente.SelectableDateStart = DpUltima.SelectedDate.Value.AddDays(1);
-            DpSiguiente.SelectedDate = DpUltima.SelectedDate.Value.AddDays(7);
         }
 
         private void BtnCancelar_Click(object sender, RoutedEventArgs e)
@@ -54,13 +40,10 @@ namespace ListadoDeTesis
 
         private void Btncontinuar_Click(object sender, RoutedEventArgs e)
         {
-            fechaInicio = DpUltima.SelectedDate;
-            fechaFinal = DpSiguiente.SelectedDate;
+            fechaEnvio = DpSiguiente.SelectedDate;
 
             this.LaunchBusyIndicator();
         }
-
-
 
         #region Background Worker
 
@@ -68,9 +51,9 @@ namespace ListadoDeTesis
 
         private void WorkerDoWork(object sender, DoWorkEventArgs e)
         {
-            ObservableCollection<Tesis> tesisPorImprimir = new TesisModel().GetTesis(fechaInicio, fechaFinal);
+            ObservableCollection<Tesis> tesisPorImprimir = new TesisModel().GetTesis(fechaEnvio);
 
-            Listado printReport = new Listado(tesisPorImprimir, fechaFinal);
+            Listado printReport = new Listado(tesisPorImprimir, fechaEnvio);
             printReport.GeneraListado();
         }
 
