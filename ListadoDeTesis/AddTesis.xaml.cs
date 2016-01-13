@@ -19,6 +19,7 @@ namespace ListadoDeTesis
         private ObservableCollection<Tesis> listaTesis;
         private Tesis miTesis;
         private bool isUpdate = false;
+        ObservableCollection<Organismos> organismos;
 
         /// <summary>
         /// Agrega una tesis al listado existente
@@ -39,14 +40,17 @@ namespace ListadoDeTesis
 
         private void RadWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            organismos = new OrganismosModel().GetOrganismos();
             CbxColor.DataContext = new Colores().GetColores();
             TxtMaterias.Text = String.Empty;
             TxtOficio.Text = String.Empty;
 
-            CbxColor.SelectedIndex = 0;
+           
 
             if(isUpdate)
                 this.FillData();
+            else
+                CbxColor.SelectedIndex = 0;
             
         }
 
@@ -58,15 +62,15 @@ namespace ListadoDeTesis
 
             switch (radio.Name)
             {
-                case "RadCorte": listaOrg = (from n in OrganismosSingleton.Organismos
+                case "RadCorte": listaOrg = (from n in organismos
                                                                 where n.IdInstancia == 100
                                                                 select n).ToList();
                     break;
-                case "RadPlenos": listaOrg = (from n in OrganismosSingleton.Organismos
+                case "RadPlenos": listaOrg = (from n in organismos
                                                                  where n.IdInstancia == 4
                                                                  select n).ToList();
                     break;
-                case "RadTribunal": listaOrg = (from n in OrganismosSingleton.Organismos
+                case "RadTribunal": listaOrg = (from n in organismos
                                                                      where n.IdInstancia == 1
                                                                      select n).ToList();
                     break;
@@ -152,7 +156,9 @@ namespace ListadoDeTesis
             else
             {
                 MateriasAsignadas.Visibility = Visibility.Visible;
-                TxtOficio.Text = "2a-SAST-";
+
+                if(!isUpdate)
+                    TxtOficio.Text = "2a-SAST-";
 
             }
           
@@ -198,6 +204,8 @@ namespace ListadoDeTesis
                 TxtMaterias.Text = miTesis.MateriaAsignada;
                 TxtOficio.Text = miTesis.Oficio;
             }
+
+            CbxColor.SelectedValue = miTesis.IdColor;
         }
     }
 }

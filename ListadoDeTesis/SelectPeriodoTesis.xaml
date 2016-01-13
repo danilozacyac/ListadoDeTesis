@@ -13,7 +13,7 @@
                               IsIndeterminate="True"
                               telerik:StyleManager.Theme="Windows8Touch">
         <Grid>
-        <telerik:RadDatePicker x:Name="DpSiguiente"
+            <telerik:RadDatePicker x:Name="DpSiguiente"
                                    Width="220"
                                    Margin="27,72,0,0"
                                    HorizontalAlignment="Left"
@@ -34,8 +34,11 @@
                                VerticalAlignment="Top"
                                Click="BtnCancelar_Click"
                                Content="Cancelar" />
-        <Label Content="Generar reporte de las tesis enviadas el:" HorizontalAlignment="Left" Margin="27,27,0,0" VerticalAlignment="Top"/>
+            <Label Margin="27,27,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="Generar reporte de las tesis enviadas el:" />
 
-    </Grid>
+        </Grid>
     </telerik:RadBusyIndicator>
 </telerik:RadWindow>

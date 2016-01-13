@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-using Telerik.Windows.Controls;
+using ListadoDeTesis.Models;
 
 namespace ListadoDeTesis.Stats
 {
@@ -23,6 +13,34 @@ namespace ListadoDeTesis.Stats
         public NumTesisGenerales()
         {
             InitializeComponent();
+        }
+
+        private void RadWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            int initYear = 2015;
+            int currentYear = DateTime.Now.Year;
+
+            while (currentYear >= initYear)
+            {
+                CbxYear.Items.Add(currentYear);
+                currentYear--;
+            }
+            CbxYear.SelectedIndex = 0;
+            
+        }
+
+        private void CbxYear_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            string year = CbxYear.SelectedItem.ToString();
+
+            StatsModel stats = new StatsModel();
+            TesisPleno.DataContext = stats.GetTesisPorInstanciaPorAbogado("IdSubinstancia", 10000,year);
+            TesisPrimera.DataContext = stats.GetTesisPorInstanciaPorAbogado("IdSubinstancia", 10001, year);
+            TesisSegunda.DataContext = stats.GetTesisPorInstanciaPorAbogado("IdSubinstancia", 10002, year);
+            TesisPlenosC.DataContext = stats.GetTesisPorInstanciaPorAbogado("IdInstancia", 4, year);
+            TesisTribunales.DataContext = stats.GetTesisPorInstanciaPorAbogado("IdInstancia", 1, year);
+
+            TxtTitle.Text = "Total de tesis enviadas en " + year + " por instancia";
         }
     }
 }

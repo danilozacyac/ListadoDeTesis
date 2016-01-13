@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using ListadoDeTesis.Dto;
+using ListadoDeTesis.Models;
 using ListadoDeTesis.Singletons;
 using Microsoft.Office.Interop.Word;
 using ScjnUtilities;
@@ -12,6 +13,8 @@ namespace ListadoDeTesis.Reportes
 {
     public class Listado
     {
+        private ObservableCollection<Organismos> organismos;
+
         private readonly ObservableCollection<Tesis> tesisImprimir;
         private readonly DateTime? fechaEnvio;
 
@@ -28,6 +31,7 @@ namespace ListadoDeTesis.Reportes
         {
             this.tesisImprimir = tesisImprimir;
             this.fechaEnvio = fechaEnvio;
+            organismos = new OrganismosModel().GetOrganismos();
         }
 
         public void GeneraListado()
@@ -302,7 +306,7 @@ namespace ListadoDeTesis.Reportes
               
 
                 oTable.Cell(fila, 1).Range.Text = "Consecutivo";
-                oTable.Cell(fila, 2).Range.Text = "Organo";
+                oTable.Cell(fila, 2).Range.Text = "Órgano";
                 oTable.Cell(fila, 3).Range.Text = "Núm. de identificación de la tesis";
                 oTable.Cell(fila, 4).Range.Text = "Título y subtítulo";
 
@@ -316,7 +320,7 @@ namespace ListadoDeTesis.Reportes
                     WdColorIndex cellColor = this.GetCellColor(print.IdColor);
                     oTable.Cell(fila, 1).Range.Text = consecutivo.ToString();
                     oTable.Cell(fila, 1).Range.Font.ColorIndex = cellColor;
-                    oTable.Cell(fila, 2).Range.Text = (from n in OrganismosSingleton.Organismos
+                    oTable.Cell(fila, 2).Range.Text = (from n in organismos
                                                        where n.IdOrganismo == print.IdSubInstancia
                                                        select n.Organismo).ToList()[0];
                     oTable.Cell(fila, 2).Range.Font.ColorIndex = cellColor;

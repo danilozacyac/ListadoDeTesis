@@ -147,10 +147,12 @@ namespace ListadoDeTesis
             {
                 BtnAddTesis.IsEnabled = false;
                 BtnPrint.IsEnabled = true;
+                BtnEliminarTesis.IsEnabled = true;
             }
             else if (AccesoUsuarioModel.Grupo == 3)
             {
                 //Hasta ahorita tiene permiso de todo
+                BtnEliminarTesis.IsEnabled = true;
             }
             else if (AccesoUsuarioModel.Grupo == 5)
             {
@@ -161,7 +163,10 @@ namespace ListadoDeTesis
             {
                 BtnVerEnvios.IsEnabled = true;
                 BtnEditTesis.IsEnabled = true;
+                BtnEliminarTesis.IsEnabled = true;
             }
+
+            
         }
 
         private void VerEnvios_Click(object sender, RoutedEventArgs e)
@@ -237,15 +242,18 @@ namespace ListadoDeTesis
         {
             selectedTesis = GTesis.SelectedItem as Tesis;
 
-            if (selectedTesis.IdUsuarioValida > 0)
+            if (selectedTesis != null)
             {
-                BtnEditTesis.IsEnabled = false;
-                BtnEditTesis.ToolTip = "Las tesis que ya fueron validadas no pueden ser modificadas";
-            }
-            else
-            {
-                BtnEditTesis.IsEnabled = true;
-                BtnEditTesis.ToolTip = "Permite capturar la información de una tesis capturada con anterioridad";
+                if (selectedTesis.IdUsuarioValida > 0)
+                {
+                    BtnEditTesis.IsEnabled = false;
+                    BtnEditTesis.ToolTip = "Las tesis que ya fueron validadas no pueden ser modificadas";
+                }
+                else
+                {
+                    BtnEditTesis.IsEnabled = true;
+                    BtnEditTesis.ToolTip = "Permite capturar la información de una tesis capturada con anterioridad";
+                }
             }
         }
 
@@ -290,6 +298,17 @@ namespace ListadoDeTesis
         }
 
         #endregion
+
+        private void BtnEstadisticas_Click(object sender, RoutedEventArgs e)
+        {
+            NumTesisGenerales gral = new NumTesisGenerales();
+            gral.ShowDialog();
+        }
+
+        private void BtnEliminarTesis_Click(object sender, RoutedEventArgs e)
+        {
+            new TesisModel().DeleteTesis(selectedTesis, listaTesis);
+        }
 
         
 

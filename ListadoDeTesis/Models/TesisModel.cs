@@ -550,6 +550,46 @@ namespace ListadoDeTesis.Models
         }
 
         /// <summary>
+        /// Elimina una tesis previamente capturada
+        /// </summary>
+        /// <param name="tesis"></param>
+        public void DeleteTesis(Tesis tesis,ObservableCollection<Tesis> listaTesis)
+        {
+            OleDbConnection connection = new OleDbConnection(connectionString);
+
+            OleDbCommand cmd = new OleDbCommand();
+
+            
+            cmd.Connection = connection;
+
+
+            try
+            {
+                connection.Open();
+
+                cmd.CommandText = "DELETE FROM Tesis WHERE IdTesis = @IdTesis";
+                cmd.Parameters.AddWithValue("@IdTesis", tesis.IdTesis);
+                cmd.ExecuteNonQuery();
+
+                listaTesis.Remove(tesis);
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        /// <summary>
         /// Invalida la validación previa de una tesis 
         /// </summary>
         /// <param name="tesis"></param>
@@ -620,70 +660,5 @@ namespace ListadoDeTesis.Models
 
 
 
-        #region Bitacora
-
-        private void SetNewBitacoraEntry(Tesis tesis)
-        {
-            OleDbConnection connection = new OleDbConnection(connectionString);
-
-            string sSql;
-            OleDbDataAdapter dataAdapter;
-
-            DataSet dataSet = new DataSet();
-            DataRow dr;
-
-            try
-            {
-
-                string sqlCadena = "SELECT * FROM Bitacora WHERE Id = 0";
-
-                dataAdapter = new OleDbDataAdapter();
-                dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, connection);
-
-                dataAdapter.Fill(dataSet, "Bitacora");
-
-                dr = dataSet.Tables["Bitacora"].NewRow();
-
-                dr["IdTesis"] = tesis.IdTesis;
-                dr["IdUsuario"] = AccesoUsuarioModel.Llave;
-                dr["FechaAlta"] = DateTime.Now;
-                dr["FechaAltaInt"] = ScjnUtilities.DateTimeUtilities.DateToInt(DateTime.Now);
-
-                dataSet.Tables["Bitacora"].Rows.Add(dr);
-
-                dataAdapter.InsertCommand = connection.CreateCommand();
-
-                sSql = "INSERT INTO Bitacora (IdTesis,IdUsuario,FechaAlta,FechaAltaInt) " +
-                       " VALUES (@IdTesis,@IdUsuario,@FechaAlta,@FechaAltaInt)";
-
-                dataAdapter.InsertCommand.CommandText = sSql;
-
-                dataAdapter.InsertCommand.Parameters.Add("@IdTesis", OleDbType.Numeric, 0, "IdTesis");
-                dataAdapter.InsertCommand.Parameters.Add("@IdUsuario", OleDbType.Numeric, 0, "IdUsuario");
-                dataAdapter.InsertCommand.Parameters.Add("@FechaAlta", OleDbType.Date, 0, "FechaAlta");
-                dataAdapter.InsertCommand.Parameters.Add("@FechaAltaInt", OleDbType.Numeric, 0, "FechaAltaInt");
-
-                dataAdapter.Update(dataSet, "Bitacora");
-                dataSet.Dispose();
-                dataAdapter.Dispose();
-
-            }
-            catch (OleDbException ex)
-            {
-                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
-            }
-            catch (Exception ex)
-            {
-                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
-
-        #endregion
     }
 }

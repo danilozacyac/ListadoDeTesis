@@ -53,6 +53,7 @@ namespace ListadoDeTesis
         {
             var x = OrganismosSingleton.Organismos;
             listaTesis = new TesisModel().GetTesis();
+            x.Clear();
         }
 
         void WorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

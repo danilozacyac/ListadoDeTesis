@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ListadoDeTesis.Dto;
 using ScjnUtilities;
 
@@ -52,12 +50,12 @@ namespace ListadoDeTesis.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,StatsModel", "ListadoDeTesis");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,StatsModel", "ListadoDeTesis");
             }
             finally
             {
@@ -134,12 +132,72 @@ namespace ListadoDeTesis.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,StatsModel", "ListadoDeTesis");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TesisModel", "ListadoDeTesis");
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,StatsModel", "ListadoDeTesis");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return listaTesis;
+        }
+
+        /// <summary>
+        /// Devuelve el número de tesis enviadas por instancia en un año en específico por abogado
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="valor"></param>
+        /// <param name="year">Año del cual se quieren consultar el número de tesis</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Revisar consultas SQL para comprobar si tienen vulnerabilidades de seguridad")]
+        public List<Estadistica> GetTesisPorInstanciaPorAbogado(string param, int valor,string year)
+        {
+            List<Estadistica> listaTesis = new List<Estadistica>();
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+            String sqlCadena = "SELECT Usuario, COUNT(Tesis.FechaReal) AS Total " + 
+                               " FROM Tesis INNER JOIN Usuarios ON Tesis.IdUsuario = Usuarios.Llave " +
+                               "  WHERE " + param + " = @Valor AND YEAR(FechaEnvio) = @Year GROUP BY Usuario";
+
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                cmd.Parameters.AddWithValue("@Valor", valor);
+                cmd.Parameters.AddWithValue("@Year", year);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Estadistica stat = new Estadistica();
+                        stat.Usuario = reader["Usuario"].ToString();
+                        stat.TotalTesis = Convert.ToInt32(reader["Total"]);
+                        listaTesis.Add(stat);
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,StatsModel", "ListadoDeTesis");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,StatsModel", "ListadoDeTesis");
             }
             finally
             {

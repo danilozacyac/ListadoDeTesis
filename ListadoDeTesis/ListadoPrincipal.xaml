@@ -42,6 +42,15 @@
                             <TextBlock HorizontalAlignment="Center" Text="Tesis" />
                         </StackPanel>
                     </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="BtnEliminarTesis"
+                                             IsEnabled="False"
+                                             LargeImage="Resources/1425495925_delete-notes.png"
+                                             Size="Large" Click="BtnEliminarTesis_Click">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="Eliminar" />
+                            <TextBlock HorizontalAlignment="Center" Text="Tesis" />
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton x:Name="BtnMisTesis"
                                              Click="BtnMisTesis_Click"
                                              LargeImage="Resources/1425495849_user.png"
@@ -102,6 +111,17 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="Regresar" />
                             <TextBlock HorizontalAlignment="Center" Text="tesis" />
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                </telerik:RadRibbonGroup>
+                <telerik:RadRibbonGroup Header="Estadísticas" Visibility="Hidden">
+                    <telerik:RadRibbonButton x:Name="BtnEstadisticas"
+                                             Click="BtnEstadisticas_Click"
+                                             LargeImage="Resources/statistics_128.png" 
+                                             Size="Large">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="Mostrar" />
+                            <TextBlock HorizontalAlignment="Center" Text="Estadísticas" />
                         </StackPanel>
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>
