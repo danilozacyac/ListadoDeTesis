@@ -43,9 +43,10 @@
                         </StackPanel>
                     </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton x:Name="BtnEliminarTesis"
+                                             Click="BtnEliminarTesis_Click"
                                              IsEnabled="False"
                                              LargeImage="Resources/1425495925_delete-notes.png"
-                                             Size="Large" Click="BtnEliminarTesis_Click">
+                                             Size="Large">
                         <StackPanel Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="Eliminar" />
                             <TextBlock HorizontalAlignment="Center" Text="Tesis" />
@@ -117,7 +118,7 @@
                 <telerik:RadRibbonGroup Header="Estadísticas" Visibility="Hidden">
                     <telerik:RadRibbonButton x:Name="BtnEstadisticas"
                                              Click="BtnEstadisticas_Click"
-                                             LargeImage="Resources/statistics_128.png" 
+                                             LargeImage="Resources/statistics_128.png"
                                              Size="Large">
                         <StackPanel Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="Mostrar" />

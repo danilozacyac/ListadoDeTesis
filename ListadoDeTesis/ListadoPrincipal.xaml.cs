@@ -307,7 +307,11 @@ namespace ListadoDeTesis
 
         private void BtnEliminarTesis_Click(object sender, RoutedEventArgs e)
         {
-            new TesisModel().DeleteTesis(selectedTesis, listaTesis);
+            MessageBoxResult result = MessageBox.Show("¿Estas seguro de eliminar la tesis: " + selectedTesis.ClaveTesis + "?",
+                "Atención", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if(result == MessageBoxResult.Yes)
+                    new TesisModel().DeleteTesis(selectedTesis, listaTesis);
         }
 
         
