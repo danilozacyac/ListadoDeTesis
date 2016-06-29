@@ -2,7 +2,6 @@ c:\users\lavega\documents\visual studio 2012\Projects\ListadoDeTesis\ListadoDeTe
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\ListadoDeTesis.exe
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\ListadoDeTesis.pdb
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\MantesisVerIusCommonObjects.dll
-C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\ScjnUtilities.dll
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\Telerik.Windows.Controls.dll
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\Telerik.Windows.Controls.Docking.dll
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\ListadoDeTesis\ListadoDeTesis\bin\Debug\Telerik.Windows.Controls.GridView.dll
