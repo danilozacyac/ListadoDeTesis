@@ -30,10 +30,8 @@ namespace ListadoDeTesis.Models
             {
                 tesis.IdTesis = DataBaseUtilities.GetNextIdForUse("Tesis", "IdTesis",connection);
 
-                string sqlCadena = "SELECT * FROM Tesis WHERE IdTesis = 0";
-
                 dataAdapter = new OleDbDataAdapter();
-                dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, connection);
+                dataAdapter.SelectCommand = new OleDbCommand( "SELECT * FROM Tesis WHERE IdTesis = 0", connection);
 
                 dataAdapter.Fill(dataSet, "Tesis");
 
@@ -116,35 +114,35 @@ namespace ListadoDeTesis.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT * FROM Tesis  ORDER BY FechaRealInt desc, RubroStr asc";
-
             try
             {
                 connection.Open();
 
-                cmd = new OleDbCommand(sqlCadena, connection);
+                cmd = new OleDbCommand("SELECT * FROM Tesis  ORDER BY FechaRealInt desc, RubroStr asc", connection);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        Tesis tesis = new Tesis();
-                        tesis.IdTesis = Convert.ToInt32(reader["IdTesis"]);
-                        tesis.ClaveTesis = reader["Tesis"].ToString();
-                        tesis.Rubro = reader["Rubro"].ToString();
-                        tesis.Tatj = Convert.ToInt32(reader["tatj"]);
-                        tesis.IdInstancia = Convert.ToInt32(reader["IdInstancia"]);
-                        tesis.IdSubInstancia = Convert.ToInt32(reader["IdSubInstancia"]);
-                        tesis.OrdenInstancia = Convert.ToInt32(reader["OrdenInstancia"]);
-                        tesis.IdColor = Convert.ToInt32(reader["IdColor"]);
-                        tesis.IdUsuario = Convert.ToInt32(reader["IdUsuario"]);
-                        tesis.MateriaAsignada = reader["MateriaAsignada"].ToString();
-                        tesis.Oficio = reader["Oficio"].ToString();
-                        tesis.FechaAltaSistema = DateTimeUtilities.GetDateFromReader(reader, "FechaAlta");
-                        tesis.FechaEnvio = DateTimeUtilities.GetDateFromReader(reader, "FechaEnvio");
-                        tesis.FechaReal = DateTimeUtilities.GetDateFromReader(reader, "FechaReal");
-                        tesis.IdUsuarioValida = Convert.ToInt32(reader["IdUsuarioValida"]);
+                        Tesis tesis = new Tesis()
+                        {
+                            IdTesis = Convert.ToInt32(reader["IdTesis"]),
+                            ClaveTesis = reader["Tesis"].ToString(),
+                            Rubro = reader["Rubro"].ToString(),
+                            Tatj = Convert.ToInt32(reader["tatj"]),
+                            IdInstancia = Convert.ToInt32(reader["IdInstancia"]),
+                            IdSubInstancia = Convert.ToInt32(reader["IdSubInstancia"]),
+                            OrdenInstancia = Convert.ToInt32(reader["OrdenInstancia"]),
+                            IdColor = Convert.ToInt32(reader["IdColor"]),
+                            IdUsuario = Convert.ToInt32(reader["IdUsuario"]),
+                            MateriaAsignada = reader["MateriaAsignada"].ToString(),
+                            Oficio = reader["Oficio"].ToString(),
+                            FechaAltaSistema = DateTimeUtilities.GetDateFromReader(reader, "FechaAlta"),
+                            FechaEnvio = DateTimeUtilities.GetDateFromReader(reader, "FechaEnvio"),
+                            FechaReal = DateTimeUtilities.GetDateFromReader(reader, "FechaReal"),
+                            IdUsuarioValida = Convert.ToInt32(reader["IdUsuarioValida"])
+                        };
                         
                         listaTesis.Add(tesis);
                     }
@@ -415,8 +413,7 @@ namespace ListadoDeTesis.Models
         {
             OleDbConnection connection = new OleDbConnection(connectionString);
             OleDbDataAdapter dataAdapter;
-            OleDbCommand cmd;
-            cmd = connection.CreateCommand();
+            OleDbCommand cmd = connection.CreateCommand();
             cmd.Connection = connection;
 
             try
@@ -486,8 +483,7 @@ namespace ListadoDeTesis.Models
         {
             OleDbConnection connection = new OleDbConnection(connectionString);
             OleDbDataAdapter dataAdapter;
-            OleDbCommand cmd;
-            cmd = connection.CreateCommand();
+            OleDbCommand cmd = connection.CreateCommand();
             cmd.Connection = connection;
 
             try
@@ -557,10 +553,7 @@ namespace ListadoDeTesis.Models
         {
             OleDbConnection connection = new OleDbConnection(connectionString);
 
-            OleDbCommand cmd = new OleDbCommand();
-
-            
-            cmd.Connection = connection;
+            OleDbCommand cmd = new OleDbCommand() { Connection = connection };
 
 
             try
@@ -597,8 +590,7 @@ namespace ListadoDeTesis.Models
         {
             OleDbConnection connection = new OleDbConnection(connectionString);
             OleDbDataAdapter dataAdapter;
-            OleDbCommand cmd;
-            cmd = connection.CreateCommand();
+            OleDbCommand cmd = connection.CreateCommand();
             cmd.Connection = connection;
 
             try

@@ -73,10 +73,7 @@ namespace ListadoDeTesis.Models
         {
             ObservableCollection<Usuarios> listausuarios = new ObservableCollection<Usuarios>();
 
-            Usuarios usuario = new Usuarios();
-            usuario.IdUsuario = Convert.ToInt32(1000);
-            usuario.Nombre = "Todo";
-            usuario.Usuario = "Todo";
+            Usuarios usuario = new Usuarios() { IdUsuario = Convert.ToInt32(1000), Nombre = "Todo", Usuario = "Todo" };
 
             listausuarios.Add(usuario);
 
@@ -85,13 +82,11 @@ namespace ListadoDeTesis.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT * FROM Usuarios WHERE Estado = 1";
-
             try
             {
                 connection.Open();
 
-                cmd = new OleDbCommand(sqlCadena, connection);
+                cmd = new OleDbCommand("SELECT * FROM Usuarios WHERE Estado = 1", connection);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)

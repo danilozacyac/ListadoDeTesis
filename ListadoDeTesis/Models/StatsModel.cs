@@ -25,13 +25,11 @@ namespace ListadoDeTesis.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT  FechaReal FROM Tesis GROUP BY FechaReal Order BY FechaReal";
-
             try
             {
                 connection.Open();
 
-                cmd = new OleDbCommand(sqlCadena, connection);
+                cmd = new OleDbCommand("SELECT  FechaReal FROM Tesis GROUP BY FechaReal Order BY FechaReal", connection);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -120,9 +118,11 @@ namespace ListadoDeTesis.Models
                 {
                     while (reader.Read())
                     {
-                        Estadistica stat = new Estadistica();
-                        stat.Usuario = reader["Usuario"].ToString();
-                        stat.TotalTesis = Convert.ToInt32(reader["Total"]);
+                        Estadistica stat = new Estadistica()
+                        {
+                            Usuario = reader["Usuario"].ToString(),
+                            TotalTesis = Convert.ToInt32(reader["Total"])
+                        };
                         listaTesis.Add(stat);
                     }
                 }
@@ -163,9 +163,8 @@ namespace ListadoDeTesis.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT Usuario, COUNT(Tesis.FechaReal) AS Total " + 
-                               " FROM Tesis INNER JOIN Usuarios ON Tesis.IdUsuario = Usuarios.Llave " +
-                               "  WHERE " + param + " = @Valor AND YEAR(FechaEnvio) = @Year GROUP BY Usuario";
+            String sqlCadena = String.Format("SELECT Usuario, COUNT(Tesis.FechaReal) AS Total  FROM Tesis INNER JOIN Usuarios ON Tesis.IdUsuario = Usuarios.Llave  " +
+                                             "WHERE {0} = @Valor AND YEAR(FechaEnvio) = @Year GROUP BY Usuario", param);
 
             try
             {
@@ -180,9 +179,11 @@ namespace ListadoDeTesis.Models
                 {
                     while (reader.Read())
                     {
-                        Estadistica stat = new Estadistica();
-                        stat.Usuario = reader["Usuario"].ToString();
-                        stat.TotalTesis = Convert.ToInt32(reader["Total"]);
+                        Estadistica stat = new Estadistica()
+                        {
+                            Usuario = reader["Usuario"].ToString(),
+                            TotalTesis = Convert.ToInt32(reader["Total"])
+                        };
                         listaTesis.Add(stat);
                     }
                 }

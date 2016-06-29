@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using ListadoDeTesis.Dto;
 using ListadoDeTesis.Models;
-using ListadoDeTesis.Singletons;
 using Microsoft.Office.Interop.Word;
 using ScjnUtilities;
 
@@ -13,13 +12,13 @@ namespace ListadoDeTesis.Reportes
 {
     public class Listado
     {
-        private ObservableCollection<Organismos> organismos;
+        private readonly ObservableCollection<Organismos> organismos;
 
         private readonly ObservableCollection<Tesis> tesisImprimir;
         private readonly DateTime? fechaEnvio;
 
-        Microsoft.Office.Interop.Word.Application oWord;
-        Microsoft.Office.Interop.Word.Document oDoc;
+        Application oWord;
+        Document oDoc;
         object oMissing = System.Reflection.Missing.Value;
         object oEndOfDoc = "\\endofdoc";
 
@@ -36,7 +35,7 @@ namespace ListadoDeTesis.Reportes
 
         public void GeneraListado()
         {
-            oWord = new Microsoft.Office.Interop.Word.Application();
+            oWord = new Application();
             oDoc = oWord.Documents.Add(ref oMissing, ref oMissing, ref oMissing, ref oMissing);
             oDoc.PageSetup.Orientation = WdOrientation.wdOrientPortrait;
 
@@ -44,12 +43,11 @@ namespace ListadoDeTesis.Reportes
             try
             {
                 //Insert a paragraph at the beginning of the document.
-                Microsoft.Office.Interop.Word.Paragraph oPara1;
-                oPara1 = oDoc.Content.Paragraphs.Add(ref oMissing);
+                Paragraph oPara1 = oDoc.Content.Paragraphs.Add(ref oMissing);
                 //oPara1.Range.ParagraphFormat.Space1;
                 oPara1.Range.Text = "SUPREMA CORTE DE JUSTICIA DE LA NACIÓN";
 
-                oPara1.Range.ParagraphFormat.Alignment = Microsoft.Office.Interop.Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                oPara1.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 oPara1.Range.Font.Bold = 1;
                 oPara1.Range.Font.Size = 10;
                 oPara1.Range.Font.Name = "Arial";
@@ -64,9 +62,9 @@ namespace ListadoDeTesis.Reportes
                 oPara1.Range.Text = "RELACIÓN DE TESIS PARA PUBLICAR EN EL SEMANARIO JUDICIAL DE LA FEDERACIÓN Y EN SU GACETA";
                 oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.InsertParagraphAfter();
-                oPara1.Range.Text = "(AL " + DateTimeUtilities.ToLongDateFormat(fechaEnvio).ToUpper() + ")";
+                oPara1.Range.Text = String.Format("(AL {0})", DateTimeUtilities.ToLongDateFormat(fechaEnvio).ToUpper());
                 oPara1.Range.InsertParagraphAfter();
-                oPara1.Range.Text = "TOTAL:   " + tesisImprimir.Count() + " TESIS";
+                oPara1.Range.Text = String.Format("TOTAL:   {0} TESIS", tesisImprimir.Count());
                 oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.InsertParagraphAfter();
 
@@ -160,7 +158,7 @@ namespace ListadoDeTesis.Reportes
             }
         }
 
-        private void PrintTable(List<Tesis> tesisPorImprimir,int idInstancia, int idSubInstancia, int tipoTesis)
+        private void PrintTable(List<Tesis> tesisPorImprimir, int idInstancia, int idSubInstancia, int tipoTesis)
         {
             if (tesisPorImprimir.Count > 0)
             {
@@ -171,8 +169,7 @@ namespace ListadoDeTesis.Reportes
                 else
                     this.AddTableContent(tesisPorImprimir, this.GetTableTitle(idInstancia, idSubInstancia), this.GetTipoTesisTitle(tipoTesis));
 
-                Microsoft.Office.Interop.Word.Paragraph oPara1;
-                oPara1 = oDoc.Content.Paragraphs.Add(ref oMissing);
+                Paragraph oPara1 = oDoc.Content.Paragraphs.Add(ref oMissing);
 
                 oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.InsertParagraphAfter();
@@ -180,7 +177,7 @@ namespace ListadoDeTesis.Reportes
         }
 
 
-        private void AddTableContent(List<Tesis> tesisAImprimir,string tabletitle, string tipoTesis)
+        private void AddTableContent(List<Tesis> tesisAImprimir, string tabletitle, string tipoTesis)
         {
             int fila = 1;
             Range wrdRng = oDoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
@@ -188,7 +185,7 @@ namespace ListadoDeTesis.Reportes
             Table oTable = oDoc.Tables.Add(wrdRng, tesisAImprimir.Count + 3, 3, ref oMissing, ref oMissing);
             //oTable.Rows[1].HeadingFormat = 1;
             oTable.Range.ParagraphFormat.SpaceAfter = 6;
-            oTable.Range.ParagraphFormat.Alignment = Microsoft.Office.Interop.Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            oTable.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
             oTable.Range.Font.Size = 9;
             oTable.Range.Font.Name = "Arial";
             oTable.Range.Font.Bold = 0;
@@ -209,7 +206,7 @@ namespace ListadoDeTesis.Reportes
             fila++;
 
             oTable.Cell(fila, 1).Range.Text = "Consecutivo";
-            
+
             oTable.Cell(fila, 2).Range.Text = "Núm. de identificación de la tesis";
             oTable.Cell(fila, 3).Range.Text = "Título y subtítulo";
 
@@ -249,7 +246,7 @@ namespace ListadoDeTesis.Reportes
             Table oTable = oDoc.Tables.Add(wrdRng, tesisAImprimir.Count + 3, 4, ref oMissing, ref oMissing);
             //oTable.Rows[1].HeadingFormat = 1;
             oTable.Range.ParagraphFormat.SpaceAfter = 6;
-            oTable.Range.ParagraphFormat.Alignment = Microsoft.Office.Interop.Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            oTable.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
             oTable.Range.Font.Size = 9;
             oTable.Range.Font.Name = "Arial";
             oTable.Range.Font.Bold = 0;
@@ -272,7 +269,7 @@ namespace ListadoDeTesis.Reportes
 
             if (idInstancia == 10002)
             {
-                
+
 
                 oTable.Cell(fila, 1).Range.Text = "Consecutivo";
 
@@ -303,7 +300,7 @@ namespace ListadoDeTesis.Reportes
             }
             else
             {
-              
+
 
                 oTable.Cell(fila, 1).Range.Text = "Consecutivo";
                 oTable.Cell(fila, 2).Range.Text = "Órgano";
@@ -313,7 +310,7 @@ namespace ListadoDeTesis.Reportes
                 fila++;
                 int consecutivo = 1;
 
-                
+
 
                 foreach (Tesis print in tesisAImprimir)
                 {
